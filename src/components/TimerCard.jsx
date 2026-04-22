@@ -58,6 +58,7 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
   const [remaining, setRemaining] = useState(() => getRemainingMs(timer))
   const [menuOpen, setMenuOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
+  const [confirmAction, setConfirmAction] = useState(null) // 'delete' | 'reset' | null
   const menuRef = useRef(null)
 
   const isPaused = timer.pausedAt !== null
@@ -105,7 +106,7 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
                 <button onClick={() => { onHide(); setMenuOpen(false) }}>
                   <EyeOff size={14} /> {isArchive ? 'Unhide' : 'Hide'}
                 </button>
-                <button className="danger" onClick={() => { onDelete(); setMenuOpen(false) }}>
+                <button className="danger" onClick={() => { setConfirmAction('delete'); setMenuOpen(false) }}>
                   <Trash2 size={14} /> Delete
                 </button>
               </div>
@@ -128,12 +129,31 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
         </div>
 
         <div className="card-actions">
-          <button className="action-btn" onClick={onPause}>
-            {isPaused ? <><Play size={14} /> Resume</> : <><Pause size={14} /> Pause</>}
-          </button>
-          <button className="action-btn" onClick={onReset}>
-            <RotateCcw size={14} /> Reset
-          </button>
+          {confirmAction ? (
+            <div className="confirm-row">
+              <span className="confirm-label">
+                {confirmAction === 'delete' ? 'Delete timer?' : 'Reset timer?'}
+              </span>
+              <div className="confirm-btns">
+                <button className="action-btn" onClick={() => setConfirmAction(null)}>Cancel</button>
+                <button
+                  className="action-btn confirm-danger"
+                  onClick={() => { confirmAction === 'delete' ? onDelete() : onReset(); setConfirmAction(null) }}
+                >
+                  {confirmAction === 'delete' ? 'Delete' : 'Reset'}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <button className="action-btn" onClick={onPause}>
+                {isPaused ? <><Play size={14} /> Resume</> : <><Pause size={14} /> Pause</>}
+              </button>
+              <button className="action-btn" onClick={() => setConfirmAction('reset')}>
+                <RotateCcw size={14} /> Reset
+              </button>
+            </>
+          )}
         </div>
       </div>
 

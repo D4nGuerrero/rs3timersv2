@@ -200,3 +200,33 @@
 }
 
 .action-btn:hover { background: var(--btn-pause-hover); color: var(--accent); }
+
+.confirm-row {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.confirm-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.confirm-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.confirm-danger {
+  color: #e05555 !important;
+  background: #fff0f0 !important;
+}
+
+.confirm-danger:hover {
+  background: #fde0e0 !important;
+  color: #c03030 !important;
+}
