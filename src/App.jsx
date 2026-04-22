@@ -131,6 +131,7 @@ export default function App() {
       saveTimer(user.id, newTimer).catch((err) =>
         console.error('saveTimer failed:', err),
       );
+    playQuack();
     return true;
   }
 

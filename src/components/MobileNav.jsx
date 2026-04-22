@@ -1,5 +1,5 @@
-import { Archive, Plus, Settings, Timer } from 'lucide-react'
-import './MobileNav.css'
+import { Archive, Plus, Settings, Timer } from 'lucide-react';
+import './MobileNav.css';
 
 export default function MobileNav({
   activeView,
@@ -11,6 +11,13 @@ export default function MobileNav({
 }) {
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">
+      <button
+        className="mobile-nav-add"
+        onClick={onNewTimer}
+        aria-label="Add timer"
+      >
+        <Plus size={26} />
+      </button>
       <button
         className={`mobile-nav-item ${activeView === 'timers' ? 'active' : ''}`}
         onClick={onTimers}
@@ -25,9 +32,6 @@ export default function MobileNav({
         <Archive size={20} />
         <span>Archive</span>
       </button>
-      <button className="mobile-nav-add" onClick={onNewTimer} aria-label="Add timer">
-        <Plus size={26} />
-      </button>
       <button
         className={`mobile-nav-item ${settingsOpen ? 'active' : ''}`}
         onClick={onOpenSettings}
@@ -36,5 +40,5 @@ export default function MobileNav({
         <span>Settings</span>
       </button>
     </nav>
-  )
+  );
 }

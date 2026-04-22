@@ -37,10 +37,6 @@ export default function Sidebar({
         </button>
       </nav>
 
-      <button className="new-timer-btn" onClick={onOpenSettings}>
-        New Timer
-      </button>
-
       <div className="sidebar-account">
         <AuthButton user={user} onLogout={onLogout} />
       </div>
