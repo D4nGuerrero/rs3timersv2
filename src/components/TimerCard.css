@@ -5,23 +5,23 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  box-shadow: 0 2px 8px rgba(74,144,217,0.08);
+  box-shadow: var(--shadow-card);
   transition: box-shadow 0.2s;
   position: relative;
 }
 
-.timer-card:hover { box-shadow: 0 4px 16px rgba(74,144,217,0.14); }
+.timer-card:hover { box-shadow: var(--shadow-card-hover); }
 
 .timer-card.done {
-  box-shadow: 0 0 0 2px #4a90d9, 0 4px 20px rgba(74,144,217,0.25);
+  box-shadow: var(--shadow-done);
   animation: done-pulse 2s ease-in-out infinite;
 }
 
 .timer-card.paused { opacity: 0.82; }
 
 @keyframes done-pulse {
-  0%, 100% { box-shadow: 0 0 0 2px #4a90d9, 0 4px 20px rgba(74,144,217,0.2); }
-  50% { box-shadow: 0 0 0 3px #4a90d9, 0 4px 28px rgba(74,144,217,0.4); }
+  0%, 100% { box-shadow: var(--shadow-done-pulse-start); }
+  50% { box-shadow: var(--shadow-done-pulse-mid); }
 }
 
 .card-header {
@@ -51,8 +51,8 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  background: #fff3cd;
-  color: #9a6700;
+  background: var(--badge-paused-bg);
+  color: var(--badge-paused-text);
   padding: 2px 7px;
   border-radius: 20px;
   flex-shrink: 0;
@@ -62,8 +62,8 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  background: #d4edff;
-  color: #1a6fa8;
+  background: var(--badge-done-bg);
+  color: var(--badge-done-text);
   padding: 2px 7px;
   border-radius: 20px;
   flex-shrink: 0;
@@ -89,10 +89,10 @@
   position: absolute;
   right: 0;
   top: calc(100% + 4px);
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 10px;
   border: 1px solid var(--border);
-  box-shadow: 0 8px 24px rgba(30,60,100,0.12);
+  box-shadow: var(--shadow-dropdown);
   min-width: 130px;
   z-index: 100;
   overflow: hidden;
@@ -114,8 +114,8 @@
 }
 
 .dropdown button:hover { background: var(--btn-pause-hover); }
-.dropdown button.danger { color: #e05555; }
-.dropdown button.danger:hover { background: #fff0f0; }
+.dropdown button.danger { color: var(--danger); }
+.dropdown button.danger:hover { background: var(--danger-bg); }
 
 .card-dates {
   display: flex;
@@ -222,13 +222,13 @@
 }
 
 .confirm-danger {
-  color: #e05555 !important;
-  background: #fff0f0 !important;
+  color: var(--danger) !important;
+  background: var(--danger-bg) !important;
 }
 
 .confirm-danger:hover {
-  background: #fde0e0 !important;
-  color: #c03030 !important;
+  background: var(--danger-bg-hover) !important;
+  color: var(--danger-dark) !important;
 }
 
 @media (max-width: 560px) {

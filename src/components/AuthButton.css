@@ -59,7 +59,7 @@
 }
 
 .auth-logout-btn:hover {
-  background: rgba(74, 144, 217, 0.08);
+  background: var(--accent-hover-bg);
   border-color: var(--accent);
   color: var(--accent);
 }
@@ -84,7 +84,7 @@
 }
 
 .auth-login-btn:hover {
-  background: rgba(74, 144, 217, 0.08);
+  background: var(--accent-hover-bg);
   border-color: var(--accent);
 }
 

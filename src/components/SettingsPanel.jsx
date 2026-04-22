@@ -4,7 +4,7 @@ import Rain from './Rain';
 import AuthButton from './AuthButton';
 import fallesi from '/public/fallesi.png';
 
-export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
+export default function SettingsPanel({ onClose, onClearAll, user, onLogout, theme, setTheme }) {
   return (
     <div
       className="modal-overlay"
@@ -37,6 +37,23 @@ export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
             >
               Clear All Timers
             </button>
+          </div>
+          <div className="settings-section">
+            <h4>Theme</h4>
+            <div className="theme-switcher">
+              <button
+                className={`theme-btn${theme === 'default' ? ' active' : ''}`}
+                onClick={() => setTheme('default')}
+              >
+                Default
+              </button>
+              <button
+                className={`theme-btn${theme === 'runescape' ? ' active' : ''}`}
+                onClick={() => setTheme('runescape')}
+              >
+                RuneScape
+              </button>
+            </div>
           </div>
           <div className="settings-section">
             <h4>About</h4>

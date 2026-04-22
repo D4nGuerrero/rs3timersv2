@@ -1,0 +1,132 @@
+/* ─────────────────────────────────────────────
+   Default theme
+───────────────────────────────────────────── */
+[data-theme="default"] {
+  /* Layout colours */
+  --bg: #5b9bd5;
+  --sidebar-bg: #d6e8f7;
+  --main-bg: #e8f2fb;
+  --card-bg: #ffffff;
+
+  /* Accent */
+  --accent: #4a90d9;
+  --accent-dark: #357abd;
+  --accent-hover-bg: rgba(74, 144, 217, 0.08);
+  --accent-active-bg: rgba(74, 144, 217, 0.1);
+
+  /* Text */
+  --text-primary: #1a2a3a;
+  --text-secondary: #5a7a9a;
+  --text-muted: #8aaccc;
+
+  /* Borders & inputs */
+  --border: #c8dff0;
+
+  /* Ring */
+  --ring-track: #d0e6f5;
+  --ring-fill: #4a90d9;
+
+  /* Buttons */
+  --btn-pause: #f0f6fc;
+  --btn-pause-hover: #e0eefa;
+  --btn-primary-text: #ffffff;
+
+  /* Sidebar active state */
+  --sidebar-active: #4a90d9;
+  --sidebar-active-text: #ffffff;
+
+  /* Overlays */
+  --overlay-bg: rgba(20, 50, 90, 0.35);
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(74, 144, 217, 0.08);
+  --shadow-card-hover: 0 4px 16px rgba(74, 144, 217, 0.14);
+  --shadow-done: 0 0 0 2px #4a90d9, 0 4px 20px rgba(74, 144, 217, 0.25);
+  --shadow-done-pulse-start: 0 0 0 2px #4a90d9, 0 4px 20px rgba(74, 144, 217, 0.2);
+  --shadow-done-pulse-mid: 0 0 0 3px #4a90d9, 0 4px 28px rgba(74, 144, 217, 0.4);
+  --shadow-modal: 0 20px 60px rgba(20, 50, 90, 0.2);
+  --shadow-dropdown: 0 8px 24px rgba(30, 60, 100, 0.12);
+  --shadow-add-btn: 0 10px 20px rgba(74, 144, 217, 0.35);
+
+  /* Badges */
+  --badge-paused-bg: #fff3cd;
+  --badge-paused-text: #9a6700;
+  --badge-done-bg: #d4edff;
+  --badge-done-text: #1a6fa8;
+
+  /* Danger */
+  --danger: #e05555;
+  --danger-bg: #fff0f0;
+  --danger-bg-hover: #fde0e0;
+  --danger-dark: #c03030;
+
+  /* Theme asset paths — drop images in src/assets/themes/default/ */
+  /* --theme-bg-image: url('../assets/themes/default/bg.png'); */
+}
+
+/* ─────────────────────────────────────────────
+   RuneScape theme — warm browns & golds
+───────────────────────────────────────────── */
+[data-theme="runescape"] {
+  /* Layout colours */
+  --bg: #1a1208;
+  --sidebar-bg: #2a1f0e;
+  --main-bg: #3d2e17;
+  --card-bg: #4a3820;
+
+  /* Accent */
+  --accent: #c8a951;
+  --accent-dark: #a88a38;
+  --accent-hover-bg: rgba(200, 169, 81, 0.1);
+  --accent-active-bg: rgba(200, 169, 81, 0.15);
+
+  /* Text */
+  --text-primary: #f0e0b0;
+  --text-secondary: #c8aa7a;
+  --text-muted: #8a7a5a;
+
+  /* Borders & inputs */
+  --border: #6a5030;
+
+  /* Ring */
+  --ring-track: #5a4020;
+  --ring-fill: #c8a951;
+
+  /* Buttons */
+  --btn-pause: #3d2e17;
+  --btn-pause-hover: #5a4020;
+  --btn-primary-text: #1a1208;
+
+  /* Sidebar active state */
+  --sidebar-active: #c8a951;
+  --sidebar-active-text: #1a1208;
+
+  /* Overlays */
+  --overlay-bg: rgba(0, 0, 0, 0.65);
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-done: 0 0 0 2px #c8a951, 0 4px 20px rgba(200, 169, 81, 0.35);
+  --shadow-done-pulse-start: 0 0 0 2px #c8a951, 0 4px 20px rgba(200, 169, 81, 0.25);
+  --shadow-done-pulse-mid: 0 0 0 3px #c8a951, 0 4px 28px rgba(200, 169, 81, 0.5);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --shadow-dropdown: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-add-btn: 0 10px 20px rgba(200, 169, 81, 0.4);
+
+  /* Badges */
+  --badge-paused-bg: #4a3510;
+  --badge-paused-text: #f0d080;
+  --badge-done-bg: #1a3550;
+  --badge-done-text: #80c0f0;
+
+  /* Danger */
+  --danger: #e05555;
+  --danger-bg: #3a1515;
+  --danger-bg-hover: #4a1818;
+  --danger-dark: #ee7777;
+
+  /* Theme asset paths — drop images in src/assets/themes/runescape/ */
+  /* --theme-bg-image: url('../assets/themes/runescape/bg.png'); */
+  /* --theme-border-image: url('../assets/themes/runescape/border.png'); */
+}

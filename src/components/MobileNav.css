@@ -43,7 +43,7 @@
 
   .mobile-nav-item.active {
     color: var(--accent);
-    background: rgba(74, 144, 217, 0.1);
+    background: var(--accent-active-bg);
   }
 
   .mobile-nav-add {
@@ -51,12 +51,12 @@
     height: 58px;
     border-radius: 50%;
     background: var(--accent);
-    color: #fff;
+    color: var(--btn-primary-text);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
-    box-shadow: 0 10px 20px rgba(74, 144, 217, 0.35);
+    box-shadow: var(--shadow-add-btn);
     transition: background 0.15s, transform 0.15s;
   }
 

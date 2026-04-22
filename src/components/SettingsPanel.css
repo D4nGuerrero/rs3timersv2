@@ -32,9 +32,9 @@
   align-self: flex-start;
   padding: 8px 16px;
   border-radius: 8px;
-  border: 1.5px solid #e05555;
+  border: 1.5px solid var(--danger);
   background: transparent;
-  color: #e05555;
+  color: var(--danger);
   font-size: 13px;
   font-weight: 600;
   font-family: var(--font);
@@ -42,7 +42,7 @@
   transition: background 0.15s;
 }
 
-.btn-danger:hover { background: #fff0f0; }
+.btn-danger:hover { background: var(--danger-bg); }
 
 .account-section {
   display: none;
@@ -119,4 +119,36 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ── Theme switcher ── */
+.theme-switcher {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.theme-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.theme-btn:hover {
+  background: var(--accent-hover-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--btn-primary-text);
 }

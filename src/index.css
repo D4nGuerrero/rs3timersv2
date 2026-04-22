@@ -1,22 +1,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #5b9bd5;
-  --sidebar-bg: #d6e8f7;
-  --main-bg: #e8f2fb;
-  --card-bg: #ffffff;
-  --accent: #4a90d9;
-  --accent-dark: #357abd;
-  --text-primary: #1a2a3a;
-  --text-secondary: #5a7a9a;
-  --text-muted: #8aaccc;
-  --border: #c8dff0;
-  --ring-track: #d0e6f5;
-  --ring-fill: #4a90d9;
-  --btn-pause: #f0f6fc;
-  --btn-pause-hover: #e0eefa;
-  --sidebar-active: #4a90d9;
-  --sidebar-active-text: #fff;
   --font: 'DM Sans', 'Segoe UI', sans-serif;
 }
 
