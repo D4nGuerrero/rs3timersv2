@@ -1,0 +1,18 @@
+.app {
+  display: flex;
+  height: 100vh;
+  padding: 16px;
+  gap: 0;
+  background: var(--bg);
+}
+
+.main {
+  flex: 1;
+  background: var(--main-bg);
+  border-radius: 0 16px 16px 0;
+  padding: 28px 28px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}

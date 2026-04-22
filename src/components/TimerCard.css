@@ -1,0 +1,202 @@
+.timer-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(74,144,217,0.08);
+  transition: box-shadow 0.2s;
+  position: relative;
+}
+
+.timer-card:hover { box-shadow: 0 4px 16px rgba(74,144,217,0.14); }
+
+.timer-card.done {
+  box-shadow: 0 0 0 2px #4a90d9, 0 4px 20px rgba(74,144,217,0.25);
+  animation: done-pulse 2s ease-in-out infinite;
+}
+
+.timer-card.paused { opacity: 0.82; }
+
+@keyframes done-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px #4a90d9, 0 4px 20px rgba(74,144,217,0.2); }
+  50% { box-shadow: 0 0 0 3px #4a90d9, 0 4px 28px rgba(74,144,217,0.4); }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.paused-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: #fff3cd;
+  color: #9a6700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.done-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: #d4edff;
+  color: #1a6fa8;
+  padding: 2px 7px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.menu-wrap { position: relative; }
+
+.menu-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: background 0.1s, color 0.1s;
+}
+
+.menu-btn:hover { background: var(--btn-pause-hover); color: var(--accent); }
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(30,60,100,0.12);
+  min-width: 130px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-family: var(--font);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.dropdown button:hover { background: var(--btn-pause-hover); }
+.dropdown button.danger { color: #e05555; }
+.dropdown button.danger:hover { background: #fff0f0; }
+
+.card-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.date-label {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+/* Ring */
+.ring-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  align-self: center;
+  margin: 4px 0;
+}
+
+.ring-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ring-track { stroke: var(--ring-track); }
+.ring-fill { stroke: var(--ring-fill); transition: stroke-dashoffset 0.5s linear; }
+
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.ring-icon { color: var(--accent); }
+
+.time-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.time-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Actions */
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: var(--btn-pause);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.action-btn:hover { background: var(--btn-pause-hover); color: var(--accent); }
