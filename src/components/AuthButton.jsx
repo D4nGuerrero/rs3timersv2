@@ -1,16 +1,12 @@
 import { supabase } from '../lib/supabase';
 import './AuthButton.css';
 
-export default function AuthButton({ user }) {
+export default function AuthButton({ user, onLogout }) {
   async function handleLogin() {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: window.location.origin + '/rs3timersv2/' },
     });
-  }
-
-  async function handleLogout() {
-    await supabase.auth.signOut();
   }
 
   if (user) {
@@ -28,7 +24,7 @@ export default function AuthButton({ user }) {
             {user.user_metadata?.full_name || user.email}
           </span>
         </div>
-        <button className="auth-logout-btn" onClick={handleLogout}>
+        <button className="auth-logout-btn" onClick={onLogout}>
           Logout
         </button>
       </div>

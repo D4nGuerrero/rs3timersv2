@@ -2,7 +2,7 @@ import { Timer, Archive, Settings } from 'lucide-react'
 import AuthButton from './AuthButton'
 import './Sidebar.css'
 
-export default function Sidebar({ activeView, setActiveView, onOpenSettings, user }) {
+export default function Sidebar({ activeView, setActiveView, onOpenSettings, user, onLogout }) {
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
@@ -38,7 +38,7 @@ export default function Sidebar({ activeView, setActiveView, onOpenSettings, use
         New Timer
       </button>
 
-      <AuthButton user={user} />
+      <AuthButton user={user} onLogout={onLogout} />
     </aside>
   )
 }

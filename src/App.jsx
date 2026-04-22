@@ -33,10 +33,20 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [user, setUser] = useState(null)
 
-  // Persist to localStorage only when logged out
-  useEffect(() => {
-    if (!user) saveTimers(timers)
-  }, [timers, user])
+  // Always keep localStorage in sync as a reliable fallback on refresh
+  useEffect(() => { saveTimers(timers) }, [timers])
+
+  // Logout: clear state immediately; SIGNED_OUT event will also fire if signOut succeeds
+  async function handleLogout() {
+    try {
+      await supabase.auth.signOut()
+    } catch (err) {
+      console.error('Sign out error:', err)
+    }
+    // Fallback: clear regardless of whether the API call succeeded
+    setUser(null)
+    setTimers(loadTimers())
+  }
 
   // Auth setup: handle session on load and auth state changes
   useEffect(() => {
@@ -45,18 +55,27 @@ export default function App() {
         if (event === 'INITIAL_SESSION') {
           if (session?.user) {
             setUser(session.user)
-            const dbTimers = await fetchTimers(session.user.id)
-            setTimers(dbTimers)
+            try {
+              const dbTimers = await fetchTimers(session.user.id)
+              setTimers(dbTimers)
+            } catch (err) {
+              console.error('Failed to load timers from DB:', err)
+              // Keep whatever is in localStorage — don't wipe it
+            }
           }
         } else if (event === 'SIGNED_IN') {
           setUser(session.user)
-          // Migrate any existing localStorage timers to DB
-          const localTimers = loadTimers()
-          if (localTimers.length > 0) {
-            await saveAllTimers(session.user.id, localTimers)
+          try {
+            const guestTimers = loadTimers()
+            if (guestTimers.length > 0) {
+              await saveAllTimers(session.user.id, guestTimers)
+              localStorage.removeItem(STORAGE_KEY)
+            }
+            const dbTimers = await fetchTimers(session.user.id)
+            setTimers(dbTimers)
+          } catch (err) {
+            console.error('DB sync on sign-in failed:', err)
           }
-          const dbTimers = await fetchTimers(session.user.id)
-          setTimers(dbTimers)
         } else if (event === 'SIGNED_OUT') {
           setUser(null)
           setTimers(loadTimers())
@@ -80,7 +99,7 @@ export default function App() {
       createdAt: now,
     }
     setTimers(prev => [newTimer, ...prev])
-    if (user) saveTimer(user.id, newTimer)
+    if (user) saveTimer(user.id, newTimer).catch(err => console.error('saveTimer failed:', err))
   }
 
   function updateTimer(id, changes) {
@@ -88,12 +107,12 @@ export default function App() {
     if (!current) return
     const updated = { ...current, ...changes }
     setTimers(prev => prev.map(t => t.id === id ? updated : t))
-    if (user) saveTimer(user.id, updated)
+    if (user) saveTimer(user.id, updated).catch(err => console.error('saveTimer failed:', err))
   }
 
   function deleteTimer(id) {
     setTimers(prev => prev.filter(t => t.id !== id))
-    if (user) deleteTimerFromDb(user.id, id)
+    if (user) deleteTimerFromDb(user.id, id).catch(err => console.error('deleteTimer failed:', err))
   }
 
   function pauseTimer(id) {
@@ -103,7 +122,7 @@ export default function App() {
       ? { ...t, startTime: t.startTime + (Date.now() - t.pausedAt), pausedAt: null }
       : { ...t, pausedAt: Date.now() }
     setTimers(prev => prev.map(timer => timer.id === id ? updated : timer))
-    if (user) saveTimer(user.id, updated)
+    if (user) saveTimer(user.id, updated).catch(err => console.error('saveTimer failed:', err))
   }
 
   function resetTimer(id) {
@@ -111,7 +130,7 @@ export default function App() {
     if (!t) return
     const updated = { ...t, startTime: Date.now(), pausedAt: null }
     setTimers(prev => prev.map(timer => timer.id === id ? updated : timer))
-    if (user) saveTimer(user.id, updated)
+    if (user) saveTimer(user.id, updated).catch(err => console.error('saveTimer failed:', err))
   }
 
   function hideTimer(id) {
@@ -119,11 +138,11 @@ export default function App() {
     if (!t) return
     const updated = { ...t, hidden: !t.hidden }
     setTimers(prev => prev.map(timer => timer.id === id ? updated : timer))
-    if (user) saveTimer(user.id, updated)
+    if (user) saveTimer(user.id, updated).catch(err => console.error('saveTimer failed:', err))
   }
 
   function clearAll() {
-    if (user) timers.forEach(t => deleteTimerFromDb(user.id, t.id))
+    if (user) timers.forEach(t => deleteTimerFromDb(user.id, t.id).catch(err => console.error('deleteTimer failed:', err)))
     setTimers([])
   }
 
@@ -133,7 +152,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Sidebar activeView={activeView} setActiveView={setActiveView} onOpenSettings={() => setSettingsOpen(true)} user={user} />
+      <Sidebar activeView={activeView} setActiveView={setActiveView} onOpenSettings={() => setSettingsOpen(true)} user={user} onLogout={handleLogout} />
       <main className="main">
         {activeView === 'timers' && <CreateTimerBar onAdd={addTimer} />}
         <TimerGrid
