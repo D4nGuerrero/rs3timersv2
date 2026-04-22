@@ -2,6 +2,7 @@ import { X } from 'lucide-react';
 import './SettingsPanel.css';
 import Rain from './Rain';
 import AuthButton from './AuthButton';
+import fallesi from '/public/fallesi.png';
 
 export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
   return (
@@ -57,7 +58,7 @@ export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
             </h4>
             <p>
               <img
-                src="./public/raindrop2.png"
+                src={fallesi}
                 alt="Fallesi Productions"
                 // middle position
                 style={{

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import './Rain.css';
+import cloud from '/public/cloud.webp';
 
 const CLOUD_COUNT = 28;
 
@@ -24,7 +25,7 @@ export default function Rain() {
       {clouds.map((c) => (
         <img
           key={c.id}
-          src="./public/raindrop.webp"
+          src={cloud}
           className="rain-cloud"
           style={{
             left: `${c.left}%`,
