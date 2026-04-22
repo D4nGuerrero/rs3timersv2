@@ -67,3 +67,20 @@
 }
 
 .new-timer-btn:hover { background: rgba(74,144,217,0.08); border-color: var(--accent); }
+
+.sidebar-account {
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+  padding: 12px 8px 4px;
+}
+
+.sidebar-account .auth-login-btn,
+.sidebar-account .auth-logout-btn {
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+}

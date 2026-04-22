@@ -25,6 +25,30 @@
   animation: toast-out 0.3s ease forwards;
 }
 
+@media (max-width: 560px) {
+  .toast {
+    left: 12px;
+    right: 12px;
+    bottom: 16px;
+    transform: none;
+    width: auto;
+    padding: 12px 14px;
+    font-size: 13px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes toast-out {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(12px); }
+  }
+}
+
 @keyframes toast-in {
   from { opacity: 0; transform: translateX(-50%) translateY(12px); }
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }

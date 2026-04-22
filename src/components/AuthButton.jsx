@@ -10,6 +10,8 @@ export default function AuthButton({ user, onLogout }) {
   }
 
   if (user) {
+    const fullName = user.user_metadata?.full_name;
+
     return (
       <div className="auth-user">
         <div className="auth-user-info">
@@ -20,9 +22,12 @@ export default function AuthButton({ user, onLogout }) {
               className="auth-avatar"
             />
           )}
-          <span className="auth-name">
-            {user.user_metadata?.full_name || user.email}
-          </span>
+          <div className="auth-user-text">
+            <span className="auth-name">{fullName || user.email}</span>
+            {fullName && user.email && (
+              <span className="auth-email">{user.email}</span>
+            )}
+          </div>
         </div>
         <button className="auth-logout-btn" onClick={onLogout}>
           Logout

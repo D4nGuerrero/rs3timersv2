@@ -23,8 +23,7 @@ function formatTimeLeft(ms) {
   return { text: `${mins}m ${secs}s`, done: false }
 }
 
-function getRemainingMs(timer) {
-  const now = Date.now()
+function getRemainingMs(timer, now = Date.now()) {
   const elapsed = timer.pausedAt !== null
     ? timer.pausedAt - timer.startTime
     : now - timer.startTime
@@ -55,7 +54,7 @@ function RingProgress({ progress }) {
 }
 
 export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, onDelete, onUpdate }) {
-  const [remaining, setRemaining] = useState(() => getRemainingMs(timer))
+  const [now, setNow] = useState(timer.pausedAt ?? timer.startTime)
   const [menuOpen, setMenuOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
   const [confirmAction, setConfirmAction] = useState(null) // 'delete' | 'reset' | null
@@ -64,13 +63,10 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
   const isPaused = timer.pausedAt !== null
 
   useEffect(() => {
-    if (isPaused) {
-      setRemaining(getRemainingMs(timer))
-      return
-    }
-    const id = setInterval(() => setRemaining(getRemainingMs(timer)), 500)
+    if (isPaused) return
+    const id = setInterval(() => setNow(Date.now()), 500)
     return () => clearInterval(id)
-  }, [timer])
+  }, [isPaused])
 
   // Close menu on outside click
   useEffect(() => {
@@ -81,6 +77,7 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
     return () => document.removeEventListener('mousedown', handle)
   }, [])
 
+  const remaining = getRemainingMs(timer, now)
   const { text: timeText, done } = formatTimeLeft(remaining)
   const progress = Math.max(0, remaining / timer.totalMs)
   const endTime = timer.startTime + timer.totalMs

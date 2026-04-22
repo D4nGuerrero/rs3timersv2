@@ -182,3 +182,48 @@
 }
 
 .btn-save:hover { background: var(--accent-dark); }
+
+@media (max-width: 560px) {
+  .modal-overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .modal {
+    width: 100%;
+    max-width: none;
+    max-height: calc(100svh - 24px);
+    border-radius: 16px;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .duration-row {
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .edit-spinner {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .spinner-group {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    width: 100%;
+  }
+}

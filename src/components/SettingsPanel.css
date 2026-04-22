@@ -1,5 +1,9 @@
 .settings-modal { width: 380px; position:relative; z-index: 2; }
 
+.settings-sheet-handle {
+  display: none;
+}
+
 .settings-section {
   display: flex;
   flex-direction: column;
@@ -39,3 +43,80 @@
 }
 
 .btn-danger:hover { background: #fff0f0; }
+
+.account-section {
+  display: none;
+}
+
+.account-section .auth-login-btn,
+.account-section .auth-logout-btn {
+  margin-top: 0;
+}
+
+@media (max-width: 560px) {
+  .settings-modal {
+    width: 100%;
+  }
+
+  .btn-danger {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 600px) {
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .settings-modal {
+    width: 100%;
+    height: auto;
+    max-height: calc(100svh - 12px);
+    margin-top: auto;
+    border-radius: 22px 22px 0 0;
+    display: flex;
+    flex-direction: column;
+    animation: settings-sheet-in 0.22s ease-out;
+  }
+
+  .settings-sheet-handle {
+    display: block;
+    width: 44px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--border);
+    margin: 10px auto 2px;
+    flex-shrink: 0;
+  }
+
+  .settings-modal .modal-header {
+    padding-top: 12px;
+  }
+
+  .settings-modal .modal-body {
+    overflow-y: auto;
+    padding-bottom: 20px;
+  }
+
+  .settings-modal .modal-footer {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    flex-shrink: 0;
+  }
+
+  .account-section {
+    display: flex;
+  }
+}
+
+@keyframes settings-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

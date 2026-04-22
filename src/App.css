@@ -1,6 +1,7 @@
 .app {
   display: flex;
-  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   padding: 16px;
   gap: 0;
   background: var(--bg);
@@ -8,11 +9,57 @@
 
 .main {
   flex: 1;
+  min-width: 0;
   background: var(--main-bg);
   border-radius: 0 16px 16px 0;
   padding: 28px 28px 20px;
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.timers-grid-scroll {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  .app {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+    flex-direction: column;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .main {
+    border-radius: 16px;
+    padding: 20px 16px 16px;
+    overflow: visible;
+  }
+
+  .timers-grid-scroll {
+    overflow-y: visible;
+  }
+}
+
+@media (max-width: 560px) {
+  .app {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .main {
+    padding: 16px 12px 14px;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding-bottom: calc(104px + env(safe-area-inset-bottom));
+  }
 }

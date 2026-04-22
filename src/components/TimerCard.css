@@ -230,3 +230,54 @@
   background: #fde0e0 !important;
   color: #c03030 !important;
 }
+
+@media (max-width: 560px) {
+  .timer-card {
+    padding: 16px 14px 12px;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+
+  .card-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card-title-row {
+    flex-wrap: wrap;
+  }
+
+  .ring-wrap {
+    width: 124px;
+    height: 124px;
+  }
+
+  .time-text {
+    font-size: 16px;
+  }
+
+  .card-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .confirm-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .confirm-label {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .confirm-btns {
+    width: 100%;
+  }
+
+  .confirm-btns .action-btn {
+    flex: 1;
+  }
+}
+

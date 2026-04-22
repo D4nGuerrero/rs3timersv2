@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import Sidebar from './components/Sidebar';
+import MobileNav from './components/MobileNav';
 import TimerGrid from './components/TimerGrid';
 import CreateTimerBar from './components/CreateTimerBar';
+import MobileCreateTimerSheet from './components/MobileCreateTimerSheet';
 import SettingsPanel from './components/SettingsPanel';
 import Toast from './components/Toast';
 import { supabase } from './lib/supabase';
 import Rain from './components/Rain';
-
 import {
   fetchTimers,
   saveTimer,
@@ -14,6 +15,8 @@ import {
   saveAllTimers,
 } from './lib/timerService';
 import './App.css';
+
+const uid = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 const STORAGE_KEY = 'dannys-timers';
 
@@ -34,6 +37,7 @@ export default function App() {
   const [timers, setTimers] = useState(loadTimers);
   const [activeView, setActiveView] = useState('timers');
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [createTimerOpen, setCreateTimerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [toast, setToast] = useState({ message: '', visible: false });
   const toastTimer = useRef(null);
@@ -44,6 +48,11 @@ export default function App() {
     toastTimer.current = setTimeout(() => {
       setToast((prev) => ({ ...prev, visible: false }));
     }, 3000);
+  }
+
+  function openMobileCreateTimer() {
+    setActiveView('timers');
+    setCreateTimerOpen(true);
   }
 
   // Always keep localStorage in sync as a reliable fallback on refresh
@@ -77,7 +86,6 @@ export default function App() {
             setTimers(dbTimers);
           } catch (err) {
             console.error('Failed to load timers from DB:', err);
-            // Keep whatever is in localStorage — don't wipe it
           }
         }
       } else if (event === 'SIGNED_IN') {
@@ -107,10 +115,10 @@ export default function App() {
 
   function addTimer({ name, days, hours, minutes }) {
     const totalMs = (days * 24 * 60 + hours * 60 + minutes) * 60 * 1000;
-    if (!name.trim() || totalMs === 0) return;
+    if (!name.trim() || totalMs === 0) return false;
     const now = Date.now();
     const newTimer = {
-      id: crypto.randomUUID(),
+      id: uid(),
       name: name.trim(),
       totalMs,
       startTime: now,
@@ -123,6 +131,7 @@ export default function App() {
       saveTimer(user.id, newTimer).catch((err) =>
         console.error('saveTimer failed:', err),
       );
+    return true;
   }
 
   function updateTimer(id, changes) {
@@ -214,21 +223,41 @@ export default function App() {
         onLogout={handleLogout}
       />
       <main className="main">
-        {activeView === 'timers' && <CreateTimerBar onAdd={addTimer} />}
-        <TimerGrid
-          timers={visibleTimers}
-          activeView={activeView}
-          onPause={pauseTimer}
-          onReset={resetTimer}
-          onHide={hideTimer}
-          onDelete={deleteTimer}
-          onUpdate={updateTimer}
-        />
+        {activeView === 'timers' && (
+          <CreateTimerBar onAdd={addTimer} className="inline-create-bar" />
+        )}
+        <div className="timers-grid-scroll">
+          <TimerGrid
+            timers={visibleTimers}
+            activeView={activeView}
+            onPause={pauseTimer}
+            onReset={resetTimer}
+            onHide={hideTimer}
+            onDelete={deleteTimer}
+            onUpdate={updateTimer}
+          />
+        </div>
       </main>
+      <MobileNav
+        activeView={activeView}
+        onTimers={() => setActiveView('timers')}
+        onArchive={() => setActiveView('archive')}
+        onNewTimer={openMobileCreateTimer}
+        onOpenSettings={() => setSettingsOpen(true)}
+        settingsOpen={settingsOpen}
+      />
+      {createTimerOpen && (
+        <MobileCreateTimerSheet
+          onClose={() => setCreateTimerOpen(false)}
+          onAdd={addTimer}
+        />
+      )}
       {settingsOpen && (
         <SettingsPanel
           onClose={() => setSettingsOpen(false)}
           onClearAll={clearAll}
+          user={user}
+          onLogout={handleLogout}
         />
       )}
       <Toast message={toast.message} visible={toast.visible} />

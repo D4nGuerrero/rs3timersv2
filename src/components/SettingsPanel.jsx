@@ -1,8 +1,9 @@
 import { X } from 'lucide-react';
 import './SettingsPanel.css';
 import Rain from './Rain';
+import AuthButton from './AuthButton';
 
-export default function SettingsPanel({ onClose, onClearAll }) {
+export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
   return (
     <div
       className="modal-overlay"
@@ -10,6 +11,7 @@ export default function SettingsPanel({ onClose, onClearAll }) {
     >
       <Rain />
       <div className="modal settings-modal">
+        <div className="settings-sheet-handle" />
         <div className="modal-header">
           <h3>Settings</h3>
           <button className="modal-close" onClick={onClose}>
@@ -20,8 +22,8 @@ export default function SettingsPanel({ onClose, onClearAll }) {
           <div className="settings-section">
             <h4>Data</h4>
             <p>
-              All timers are stored locally in your browser. Nothing is sent to
-              any server.
+              Guest timers stay in your browser. Sign in to sync timers across
+              devices with your account.
             </p>
             <button
               className="btn-danger"
@@ -81,6 +83,10 @@ export default function SettingsPanel({ onClose, onClearAll }) {
                 <Rain />
               </div>
             </p>
+          </div>
+          <div className="settings-section account-section">
+            <h4>Account</h4>
+            <AuthButton user={user} onLogout={onLogout} />
           </div>
         </div>
         <div className="modal-footer">
