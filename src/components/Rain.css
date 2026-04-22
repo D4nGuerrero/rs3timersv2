@@ -1,0 +1,21 @@
+.rain-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.rain-cloud {
+  position: absolute;
+  top: -120px;
+  animation: cloud-fall linear infinite;
+  will-change: transform;
+  user-select: none;
+  height: auto;
+}
+
+@keyframes cloud-fall {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(100vh + 140px)); }
+}

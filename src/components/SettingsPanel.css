@@ -1,4 +1,4 @@
-.settings-modal { width: 380px; }
+.settings-modal { width: 380px; position:relative; z-index: 2; }
 
 .settings-section {
   display: flex;
