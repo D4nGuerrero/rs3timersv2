@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Sidebar from './components/Sidebar'
 import TimerGrid from './components/TimerGrid'
 import CreateTimerBar from './components/CreateTimerBar'
 import SettingsPanel from './components/SettingsPanel'
+import Toast from './components/Toast'
 import { supabase } from './lib/supabase'
 import {
   fetchTimers,
@@ -32,6 +33,16 @@ export default function App() {
   const [activeView, setActiveView] = useState('timers')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [user, setUser] = useState(null)
+  const [toast, setToast] = useState({ message: '', visible: false })
+  const toastTimer = useRef(null)
+
+  function showToast(message) {
+    if (toastTimer.current) clearTimeout(toastTimer.current)
+    setToast({ message, visible: true })
+    toastTimer.current = setTimeout(() => {
+      setToast(prev => ({ ...prev, visible: false }))
+    }, 3000)
+  }
 
   // Always keep localStorage in sync as a reliable fallback on refresh
   useEffect(() => { saveTimers(timers) }, [timers])
@@ -46,6 +57,7 @@ export default function App() {
     // Fallback: clear regardless of whether the API call succeeded
     setUser(null)
     setTimers(loadTimers())
+    showToast('Signed out. See you next time! 👋')
   }
 
   // Auth setup: handle session on load and auth state changes
@@ -73,12 +85,14 @@ export default function App() {
             }
             const dbTimers = await fetchTimers(session.user.id)
             setTimers(dbTimers)
+            showToast(`Welcome back, ${session.user.user_metadata?.full_name?.split(' ')[0] || 'back'}! 👋`)
           } catch (err) {
             console.error('DB sync on sign-in failed:', err)
           }
         } else if (event === 'SIGNED_OUT') {
           setUser(null)
           setTimers(loadTimers())
+          showToast('Signed out. See you next time! 👋')
         }
       }
     )
@@ -168,6 +182,7 @@ export default function App() {
       {settingsOpen && (
         <SettingsPanel onClose={() => setSettingsOpen(false)} onClearAll={clearAll} />
       )}
+      <Toast message={toast.message} visible={toast.visible} />
     </div>
   )
 }

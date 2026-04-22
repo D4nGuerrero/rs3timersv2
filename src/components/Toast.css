@@ -1,0 +1,36 @@
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font);
+  box-shadow: 0 4px 20px rgba(74, 144, 217, 0.18);
+  z-index: 1000;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.toast-enter {
+  animation: toast-in 0.25s ease forwards;
+}
+
+.toast-exit {
+  animation: toast-out 0.3s ease forwards;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateX(-50%) translateY(0); }
+  to   { opacity: 0; transform: translateX(-50%) translateY(12px); }
+}
