@@ -68,17 +68,12 @@ export default function App() {
     saveTimers(timers);
   }, [timers]);
 
-  // Logout: clear state immediately; SIGNED_OUT event will also fire if signOut succeeds
-  async function handleLogout() {
-    try {
-      await supabase.auth.signOut();
-    } catch (err) {
-      console.error('Sign out error:', err);
-    }
-    // Fallback: clear regardless of whether the API call succeeded
+  // Logout: clear state immediately for instant feedback, then sign out in background
+  function handleLogout() {
     setUser(null);
     setTimers(loadTimers());
     showToast('Signed out. See you next time! 👋');
+    supabase.auth.signOut().catch((err) => console.error('Sign out error:', err));
   }
 
   // Auth setup: handle session on load and auth state changes
@@ -113,9 +108,9 @@ export default function App() {
           console.error('DB sync on sign-in failed:', err);
         }
       } else if (event === 'SIGNED_OUT') {
+        // State already cleared by handleLogout; just ensure consistency
         setUser(null);
         setTimers(loadTimers());
-        showToast('Signed out. See you next time! 👋');
       }
     });
     return () => subscription.unsubscribe();
