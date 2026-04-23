@@ -8,6 +8,7 @@ export default function MobileNav({
   onNewTimer,
   onOpenSettings,
   settingsOpen,
+  user,
 }) {
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">
@@ -36,7 +37,10 @@ export default function MobileNav({
         className={`mobile-nav-item ${settingsOpen ? 'active' : ''}`}
         onClick={onOpenSettings}
       >
-        <Settings size={20} />
+        <div className="nav-settings-icon-wrap">
+          <Settings size={20} />
+          <span className={`mobile-auth-dot ${user ? 'signed-in' : 'signed-out'}`} aria-hidden="true" />
+        </div>
         <span>Settings</span>
       </button>
     </nav>

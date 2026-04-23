@@ -64,4 +64,24 @@
     background: var(--accent-dark);
     transform: translateY(-1px);
   }
+
+  .nav-settings-icon-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-auth-dot {
+    position: absolute;
+    top: -3px;
+    right: -5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--sidebar-bg);
+  }
+
+  .mobile-auth-dot.signed-in  { background: #22c55e; }
+  .mobile-auth-dot.signed-out { background: #ef4444; }
 }

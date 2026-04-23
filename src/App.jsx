@@ -139,6 +139,7 @@ export default function App() {
       saveTimer(user.id, newTimer).catch((err) =>
         console.error('saveTimer failed:', err),
       );
+    showToast(`"${name.trim()}" timer added! ⏱️`);
     return true;
   }
 
@@ -154,11 +155,13 @@ export default function App() {
   }
 
   function deleteTimer(id) {
+    const timer = timers.find((t) => t.id === id);
     setTimers((prev) => prev.filter((t) => t.id !== id));
     if (user)
       deleteTimerFromDb(user.id, id).catch((err) =>
         console.error('deleteTimer failed:', err),
       );
+    if (timer) showToast(`"${timer.name}" deleted 🗑️`);
   }
 
   function pauseTimer(id) {
@@ -253,6 +256,7 @@ export default function App() {
         onNewTimer={openMobileCreateTimer}
         onOpenSettings={() => setSettingsOpen(true)}
         settingsOpen={settingsOpen}
+        user={user}
       />
       {createTimerOpen && (
         <MobileCreateTimerSheet

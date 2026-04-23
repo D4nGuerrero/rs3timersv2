@@ -29,7 +29,7 @@
   .toast {
     left: 12px;
     right: 12px;
-    bottom: 16px;
+    bottom: calc(80px + env(safe-area-inset-bottom));
     transform: none;
     width: auto;
     padding: 12px 14px;
