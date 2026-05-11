@@ -99,6 +99,9 @@
   min-width: 130px;
   z-index: 100;
   overflow: hidden;
+
+  background: var(--card-bg);
+  border-image: var(--card-border-img);
 }
 
 .dropdown button {

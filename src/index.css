@@ -22,3 +22,45 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+
+
+/* OSRS OLD PROGRESS BAR */
+
+
+.progress {
+  /* width: 100%; */
+  background-color: grey;
+  background: #352e26;
+  position: relative;
+  overflow: hidden;
+  border: solid 1px black;
+  /* margin: 20px; */
+  flex-grow: 1;
+  height: 15px;
+}
+
+.bar {
+  width: 0%;
+  height: 13px;
+  background-color: #d88020;
+}
+
+.in-progress {
+  background-color: #d88020;
+}
+
+.complete {
+  background-color: #3f821e;
+}
+
+.inner-shadow {
+  /* border: solid 3px rgba(0, 0, 0, 0.2); */
+  box-shadow: inset 3px 3px rgba(0, 0, 0, 0.2);
+
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}

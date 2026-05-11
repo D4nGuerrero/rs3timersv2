@@ -4,6 +4,9 @@ import EditModal from './EditModal'
 import './TimerCard.css'
 import { useThemeIcons } from '../hooks/useThemeIcons'
 import ActionButton from './ActionButton'
+import { ProgressBar } from './themes/runescape/ProgressBar'
+import { useTheme } from '../context/ThemeContext'
+
 
 function formatDate(ts) {
   return new Date(ts).toLocaleString('en-US', {
@@ -61,6 +64,9 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
   const [editOpen, setEditOpen] = useState(false)
   const [confirmAction, setConfirmAction] = useState(null) // 'delete' | 'reset' | null
   const menuRef = useRef(null)
+  const { theme } = useTheme();
+
+  
 
   const isPaused = timer.pausedAt !== null
 
@@ -121,14 +127,25 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
           <div><span className="date-label">ENDS:</span> {formatDate(endTime)}</div>
         </div>
 
-        <div className="ring-wrap">
-          <RingProgress progress={progress} />
+     {theme === 'runescape' ? (
+          <div className="progress-wrap">
+          <ProgressBar progress={progress} done={done} />   
+        </div>
+      
+      ) : (
+          <div className="ring-wrap">
+           <RingProgress progress={progress} />
+           
           <div className="ring-center">
             <Timer size={18} className="ring-icon" />
             <span className="time-text">{timeText}</span>
             <span className="time-sub">{done ? 'done' : 'left'}</span>
           </div>
         </div>
+      )}
+
+     
+      
 
         <div className="card-actions">
           {confirmAction ? (
