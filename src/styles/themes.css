@@ -83,7 +83,79 @@ font-size: 16px; /* integer size */
 font-weight: normal !important;
 /* line-height: 1; */
 image-rendering: pixelated;
+  text-shadow: 1px 1px 0px black;
+
 }
+
+
+[data-theme="runescape"] .auth-login-btn {
+ position: relative;
+
+  height: 32px;
+  padding: 0 14px;
+  image-rendering: pixelated;
+
+  border: none;
+
+  background-image: var(--btn-action-bg);
+
+  background-repeat: repeat-x;
+ 
+
+  color: var(--text-primary);
+border-radius: 8px;
+}
+
+
+
+.auth-login-btn::before {transition: background 0.15s, color 0.15s;
+  content: "";
+
+  position: absolute;
+  top: 0;
+
+  width: 8px; /* HALF of 78px image */
+  height: 32px;
+
+  background-image: var(--button-edges);
+  background-repeat: no-repeat;
+
+   background-size: 16px 32px;
+
+  image-rendering: pixelated;
+
+  pointer-events: none;
+    left: 0px;
+
+  background-position: 0 0;
+
+}
+.auth-login-btn::after {transition: background 0.15s, color 0.15s;
+ content: "";
+
+  position: absolute;
+  top: 0;
+
+  width: 8px; /* HALF of 78px image */
+  height: 32px;
+
+  background-image: var(--button-edges);
+  background-repeat: no-repeat;
+
+  background-size: 16px 32px;
+
+  image-rendering: pixelated;
+
+  pointer-events: none;
+
+   right: 0px;
+    /* SHIFT SPRITE LEFT */
+  background-position: -8px 0;
+}
+
+.auth-login-btn:hover::before,.auth-login-btn:hover::after { background-image: var(--button-edges-hover); }
+
+.auth-login-btn:hover { background: var(--btn-action-bg-hover); color: var(--accent); }
 
 
 [data-theme="runescape"] {
@@ -118,9 +190,9 @@ image-rendering: pixelated;
   --accent-active-bg: rgba(200, 169, 81, 0.15);
 
   /* Text */
-  --text-primary: #f0e0b0;
-  --text-secondary: #c8aa7a;
-  --text-muted: #8a7a5a;
+  --text-primary: white;
+  --text-secondary: yellow;
+  --text-muted: cyan;
 
   /* Borders & inputs */
   --border: #6a5030;
@@ -132,15 +204,16 @@ image-rendering: pixelated;
   /* Buttons */
   --btn-pause: #3d2e17;
   --btn-pause-hover: #5a4020;
-  --btn-primary-text: #1a1208;
+  --btn-primary-text: white;
   --btn-action-bg: url('../assets/themes/runescape/button_middle.png');
   --btn-action-bg-hover: url('../assets/themes/runescape/button_middle_hover.png');
 
 
 
+
   /* Sidebar active state */
   --sidebar-active: #c8a951;
-  --sidebar-active-text: #1a1208;
+  --sidebar-active-text: white;
 
   /* Overlays */
   --overlay-bg: rgba(0, 0, 0, 0.65);
@@ -170,4 +243,6 @@ image-rendering: pixelated;
   /* Theme asset paths — drop images in src/assets/themes/runescape/ */
   /* --theme-bg-image: url('../assets/themes/runescape/bg.png'); */
   /* --theme-border-image: url('../assets/themes/runescape/border.png'); */
+
+
 }

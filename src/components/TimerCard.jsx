@@ -129,7 +129,25 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
 
      {theme === 'runescape' ? (
           <div className="progress-wrap">
-          <ProgressBar progress={progress} done={done} />   
+            <img
+            style={{
+              position: 'absolute',
+              width: '100px',
+              height: '100px',
+              objectFit: 'contain',
+              right: 40,
+              top: 14
+             
+            }}
+            src="https://www.dannyg.dev/rs3timers/images/dolarakas.png" />
+       
+       {done ? (
+        'READY!'
+       ) : (
+        <span className="time-left">{timeText} left</span>
+       )}
+       
+       <ProgressBar progress={progress} done={done} />   
         </div>
       
       ) : (
