@@ -30,6 +30,7 @@
   --btn-pause: #f0f6fc;
   --btn-pause-hover: #e0eefa;
   --btn-primary-text: #ffffff;
+  --btn-radiius: 8px;
 
   /* Sidebar active state */
   --sidebar-active: #4a90d9;
@@ -67,13 +68,45 @@
 /* ─────────────────────────────────────────────
    RuneScape theme — warm browns & golds
 ───────────────────────────────────────────── */
+
+[data-theme="runescape"] img {
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"] * {
+box-sizing: border-box;
+font-smooth: never;
+-webkit-font-smoothing: none;
+text-rendering: geometricPrecision;
+
+font-size: 16px; /* integer size */
+font-weight: normal;
+/* line-height: 1; */
+image-rendering: pixelated;
+}
+
+
 [data-theme="runescape"] {
+
+  /* FONT */
+  --font: 'RuneScape', 'DM Sans', 'Segoe UI', sans-serif; 
+  
+
+    --button-edge-enabled: 1;
+  --button-edge-width: 16px;
+--btn-radius: 0px;
+  --button-edges: url('../assets/themes/runescape/button_edges.png');
+  --button-edges-hover: url('../assets/themes/runescape/button_edges_hover.png');
+ 
   /* Layout colours */
   --bg: #1a1208;
   --sidebar-bg: #2a1f0e;
   --main-bg: #3d2e17;
-  --card-bg: #4a3820;
-
+  --main-bg: url('../assets/themes/runescape/bg0.png');
+  /* --card-bg: #4a3820; */
+  --card-bg: url('../assets/themes/runescape/bg1.png');
+--card-border-img: url('../assets/themes/runescape/borders.png') 32 32 32 32 / 32px repeat;
+ 
   /* Accent */
   --accent: #c8a951;
   --accent-dark: #a88a38;
@@ -94,8 +127,12 @@
 
   /* Buttons */
   --btn-pause: #3d2e17;
+  --btn-pause: url('../assets/themes/runescape/button_middle.png');
   --btn-pause-hover: #5a4020;
+  --btn-pause-hover: url('../assets/themes/runescape/button_middle_hover.png');
   --btn-primary-text: #1a1208;
+
+
 
   /* Sidebar active state */
   --sidebar-active: #c8a951;
@@ -105,14 +142,14 @@
   --overlay-bg: rgba(0, 0, 0, 0.65);
 
   /* Shadows */
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  /* --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.45);
   --shadow-done: 0 0 0 2px #c8a951, 0 4px 20px rgba(200, 169, 81, 0.35);
   --shadow-done-pulse-start: 0 0 0 2px #c8a951, 0 4px 20px rgba(200, 169, 81, 0.25);
   --shadow-done-pulse-mid: 0 0 0 3px #c8a951, 0 4px 28px rgba(200, 169, 81, 0.5);
   --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
   --shadow-dropdown: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --shadow-add-btn: 0 10px 20px rgba(200, 169, 81, 0.4);
+  --shadow-add-btn: 0 10px 20px rgba(200, 169, 81, 0.4); */
 
   /* Badges */
   --badge-paused-bg: #4a3510;

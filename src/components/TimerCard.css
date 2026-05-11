@@ -8,6 +8,9 @@
   box-shadow: var(--shadow-card);
   transition: box-shadow 0.2s;
   position: relative;
+  border-image: var(--card-border-img);
+
+    
 }
 
 .timer-card:hover { box-shadow: var(--shadow-card-hover); }
@@ -177,7 +180,7 @@
 .card-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 16px;
   border-top: 1px solid var(--border);
   padding-top: 10px;
 }
@@ -188,7 +191,7 @@
   justify-content: center;
   gap: 6px;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: var(--btn-radius);
   border: none;
   background: var(--btn-pause);
   color: var(--text-secondary);
@@ -197,7 +200,74 @@
   font-family: var(--font);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
+  /* width: 132px; */
+  height: 36px;
 }
+
+
+
+.action-btn {
+    position: relative;
+
+  height: 32px;
+  padding: 0 14px;
+  image-rendering: pixelated;
+
+  border: none;
+
+  background-image: var(--btn-pause);
+  background-repeat: repeat-x;
+ 
+
+  color: var(--text-primary);
+}
+
+.action-btn::before {transition: background 0.15s, color 0.15s;
+  content: "";
+
+  position: absolute;
+  top: 0;
+
+
+  width: 8px; /* HALF of 78px image */
+  height: 32px;
+
+  background-image: var(--button-edges);
+  background-repeat: no-repeat;
+
+   background-size: 16px 32px;
+
+  image-rendering: pixelated;
+
+  pointer-events: none;
+    left: -4px;
+
+  background-position: 0 0;
+}
+.action-btn::after {transition: background 0.15s, color 0.15s;
+ content: "";
+
+  position: absolute;
+  top: 0;
+
+  width: 8px; /* HALF of 78px image */
+  height: 32px;
+
+  background-image: var(--button-edges);
+  background-repeat: no-repeat;
+
+  background-size: 16px 32px;
+
+  image-rendering: pixelated;
+
+  pointer-events: none;
+
+   right: -4px;
+    /* SHIFT SPRITE LEFT */
+  background-position: -8px 0;
+}
+
+.action-btn:hover::before,.action-btn:hover::after { background-image: var(--button-edges-hover); }
 
 .action-btn:hover { background: var(--btn-pause-hover); color: var(--accent); }
 
@@ -260,6 +330,8 @@
 
   .card-actions {
     grid-template-columns: 1fr;
+  
+
   }
 
   .confirm-row {

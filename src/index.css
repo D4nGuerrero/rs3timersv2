@@ -13,3 +13,12 @@ body {
   -webkit-font-smoothing: antialiased;
   
 }
+
+@font-face {
+  font-family: 'RuneScape';
+
+  src: url('assets/themes/runescape/osrs.ttf') format('truetype');
+
+  font-weight: normal;
+  font-style: normal;
+}
