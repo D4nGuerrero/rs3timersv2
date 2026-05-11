@@ -80,7 +80,7 @@ font-smooth: never;
 text-rendering: geometricPrecision;
 
 font-size: 16px; /* integer size */
-font-weight: normal;
+font-weight: normal !important;
 /* line-height: 1; */
 image-rendering: pixelated;
 }
@@ -90,6 +90,10 @@ image-rendering: pixelated;
 
   /* FONT */
   --font: 'RuneScape', 'DM Sans', 'Segoe UI', sans-serif; 
+
+
+
+
   
 
     --button-edge-enabled: 1;

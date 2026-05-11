@@ -280,8 +280,8 @@
   }
 
   .card-actions {
-    grid-template-columns: 1fr;
-  
+padding: 0 12px;  
+padding-top: 6px;
 
   }
 

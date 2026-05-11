@@ -3,6 +3,7 @@ import {
   Plus,
   Settings,
   Timer,
+  MoreVertical,
 } from 'lucide-react';
 
 import gearIcon from '../assets/themes/runescape/gear.png';

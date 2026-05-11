@@ -29,6 +29,8 @@
  
 
   color: var(--text-primary);
+ border-radius: 8px;
+
 }
 
 .action-btn::before {transition: background 0.15s, color 0.15s;
@@ -36,7 +38,6 @@
 
   position: absolute;
   top: 0;
-
 
   width: 8px; /* HALF of 78px image */
   height: 32px;

@@ -55,9 +55,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
     box-shadow: var(--shadow-add-btn);
     transition: background 0.15s, transform 0.15s;
+    margin: 0 20px;
+
+    
   }
 
   .mobile-nav-add:hover {
