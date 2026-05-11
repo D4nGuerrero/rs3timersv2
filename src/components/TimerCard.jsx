@@ -55,7 +55,7 @@ function RingProgress({ progress }) {
   )
 }
 
-export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, onDelete, onUpdate,  theme }) {
+export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, onDelete, onUpdate }) {
   const [now, setNow] = useState(timer.pausedAt ?? timer.startTime)
   const [menuOpen, setMenuOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
@@ -84,8 +84,8 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
   const progress = Math.max(0, remaining / timer.totalMs)
   const endTime = timer.startTime + timer.totalMs
 
-   const Icons = useThemeIcons(theme);
- 
+  const Icons = useThemeIcons();
+
 
   return (
     <>
