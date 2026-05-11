@@ -36,7 +36,6 @@ function saveTimers(timers) {
 export default function App() {
   const [timers, setTimers] = useState(loadTimers);
   const [activeView, setActiveView] = useState('timers');
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const [createTimerOpen, setCreateTimerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [toast, setToast] = useState({ message: '', visible: false });
@@ -216,47 +215,48 @@ export default function App() {
       <Sidebar
         activeView={activeView}
         setActiveView={setActiveView}
-        onOpenSettings={() => setSettingsOpen(true)}
         user={user}
         onLogout={handleLogout}
       />
       <main className="main">
-        {activeView === 'timers' && (
-          <CreateTimerBar onAdd={addTimer} className="inline-create-bar" />
-        )}
-        <div className="timers-grid-scroll">
-          <TimerGrid
-            timers={visibleTimers}
-            activeView={activeView}
-            onPause={pauseTimer}
-            onReset={resetTimer}
-            onHide={hideTimer}
-            onDelete={deleteTimer}
-            onUpdate={updateTimer}
+        {activeView === 'settings' ? (
+          <SettingsPanel
+            onClose={() => setActiveView('timers')}
+            onClearAll={clearAll}
+            user={user}
+            onLogout={handleLogout}
           />
-        </div>
+        ) : (
+          <>
+            {activeView === 'timers' && (
+              <CreateTimerBar onAdd={addTimer} className="inline-create-bar" />
+            )}
+            <div className="timers-grid-scroll">
+              <TimerGrid
+                timers={visibleTimers}
+                activeView={activeView}
+                onPause={pauseTimer}
+                onReset={resetTimer}
+                onHide={hideTimer}
+                onDelete={deleteTimer}
+                onUpdate={updateTimer}
+              />
+            </div>
+          </>
+        )}
       </main>
       <MobileNav
         activeView={activeView}
         onTimers={() => setActiveView('timers')}
         onArchive={() => setActiveView('archive')}
         onNewTimer={openMobileCreateTimer}
-        onOpenSettings={() => setSettingsOpen(true)}
-        settingsOpen={settingsOpen}
+        onOpenSettings={() => setActiveView('settings')}
         user={user}
       />
       {createTimerOpen && (
         <MobileCreateTimerSheet
           onClose={() => setCreateTimerOpen(false)}
           onAdd={addTimer}
-        />
-      )}
-      {settingsOpen && (
-        <SettingsPanel
-          onClose={() => setSettingsOpen(false)}
-          onClearAll={clearAll}
-          user={user}
-          onLogout={handleLogout}
         />
       )}
       <Toast message={toast.message} visible={toast.visible} />

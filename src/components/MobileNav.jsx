@@ -9,7 +9,6 @@ export default function MobileNav({
   onArchive,
   onNewTimer,
   onOpenSettings,
-  settingsOpen,
   user,
 }) {
 
@@ -39,7 +38,7 @@ export default function MobileNav({
         <span>Archive</span>
       </button>
       <button
-        className={`mobile-nav-item ${settingsOpen ? 'active' : ''}`}
+        className={`mobile-nav-item ${activeView === 'settings' ? 'active' : ''}`}
         onClick={onOpenSettings}
       >
         <div className="nav-settings-icon-wrap">

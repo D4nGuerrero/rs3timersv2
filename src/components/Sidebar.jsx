@@ -6,7 +6,6 @@ import { useThemeIcons } from '../hooks/useThemeIcons';
 export default function Sidebar({
   activeView,
   setActiveView,
-  onOpenSettings,
   user,
   onLogout,
 }) {
@@ -34,7 +33,7 @@ export default function Sidebar({
           <Icons.Archive size={18} />
           Archive
         </button>
-        <button className="nav-item" onClick={onOpenSettings}>
+        <button className={`nav-item ${activeView === 'settings' ? 'active' : ''}`} onClick={() => setActiveView('settings')}>
           <Icons.Settings size={18} />
           Settings
         </button>

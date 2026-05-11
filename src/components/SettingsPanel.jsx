@@ -1,4 +1,3 @@
-import { X } from 'lucide-react';
 import './SettingsPanel.css';
 import Rain from './Rain';
 import AuthButton from './AuthButton';
@@ -8,20 +7,8 @@ import { useTheme } from '../context/ThemeContext';
 export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
   const { theme, setTheme } = useTheme();
   return (
-    <div
-      className="modal-overlay"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
-      <Rain />
-      <div className="modal settings-modal">
-        <div className="settings-sheet-handle" />
-        <div className="modal-header">
-          <h3>Settings</h3>
-          <button className="modal-close" onClick={onClose}>
-            <X size={18} />
-          </button>
-        </div>
-        <div className="modal-body">
+    <div className="settings-screen">
+      <div className="settings-body">
           <div className="settings-section">
             <h4>Data</h4>
             <p>
@@ -109,12 +96,6 @@ export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
             <AuthButton user={user} onLogout={onLogout} />
           </div>
         </div>
-        <div className="modal-footer">
-          <button className="btn-save" onClick={onClose}>
-            Close
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
