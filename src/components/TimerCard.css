@@ -222,55 +222,6 @@
   color: var(--text-primary);
 }
 
-.action-btn::before {transition: background 0.15s, color 0.15s;
-  content: "";
-
-  position: absolute;
-  top: 0;
-
-
-  width: 8px; /* HALF of 78px image */
-  height: 32px;
-
-  background-image: var(--button-edges);
-  background-repeat: no-repeat;
-
-   background-size: 16px 32px;
-
-  image-rendering: pixelated;
-
-  pointer-events: none;
-    left: -4px;
-
-  background-position: 0 0;
-}
-.action-btn::after {transition: background 0.15s, color 0.15s;
- content: "";
-
-  position: absolute;
-  top: 0;
-
-  width: 8px; /* HALF of 78px image */
-  height: 32px;
-
-  background-image: var(--button-edges);
-  background-repeat: no-repeat;
-
-  background-size: 16px 32px;
-
-  image-rendering: pixelated;
-
-  pointer-events: none;
-
-   right: -4px;
-    /* SHIFT SPRITE LEFT */
-  background-position: -8px 0;
-}
-
-.action-btn:hover::before,.action-btn:hover::after { background-image: var(--button-edges-hover); }
-
-.action-btn:hover { background: var(--btn-pause-hover); color: var(--accent); }
-
 .confirm-row {
   grid-column: 1 / -1;
   display: flex;

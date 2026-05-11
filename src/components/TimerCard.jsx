@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { MoreVertical, EyeOff, Pencil, Trash2, Pause, Play, RotateCcw, Timer } from 'lucide-react'
 import EditModal from './EditModal'
 import './TimerCard.css'
+import { useThemeIcons } from '../hooks/useThemeIcons'
+import ActionButton from './ActionButton'
 
 function formatDate(ts) {
   return new Date(ts).toLocaleString('en-US', {
@@ -53,7 +55,7 @@ function RingProgress({ progress }) {
   )
 }
 
-export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, onDelete, onUpdate }) {
+export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, onDelete, onUpdate,  theme }) {
   const [now, setNow] = useState(timer.pausedAt ?? timer.startTime)
   const [menuOpen, setMenuOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
@@ -82,6 +84,9 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
   const progress = Math.max(0, remaining / timer.totalMs)
   const endTime = timer.startTime + timer.totalMs
 
+   const Icons = useThemeIcons(theme);
+ 
+
   return (
     <>
       <div className={`timer-card ${done ? 'done' : ''} ${isPaused ? 'paused' : ''}`}>
@@ -93,7 +98,7 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
           </div>
           <div className="menu-wrap" ref={menuRef}>
             <button className="menu-btn" onClick={() => setMenuOpen(o => !o)}>
-              <MoreVertical size={18} />
+              <Icons.Menu size={14} />
             </button>
             {menuOpen && (
               <div className="dropdown">
@@ -146,6 +151,7 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
               <button className="action-btn" onClick={onPause}>
                 {isPaused ? <><Play size={14} /> Resume</> : <><Pause size={14} /> Pause</>}
               </button>
+            
               <button className="action-btn" onClick={() => setConfirmAction('reset')}>
                 <RotateCcw size={14} /> Reset
               </button>

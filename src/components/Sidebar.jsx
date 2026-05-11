@@ -1,6 +1,7 @@
 import { Timer, Archive, Settings } from 'lucide-react'
 import AuthButton from './AuthButton'
 import './Sidebar.css'
+import { useThemeIcons } from '../hooks/useThemeIcons';
 
 export default function Sidebar({
   activeView,
@@ -9,6 +10,8 @@ export default function Sidebar({
   user,
   onLogout,
 }) {
+    const Icons = useThemeIcons();
+  
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
@@ -21,18 +24,18 @@ export default function Sidebar({
           className={`nav-item ${activeView === 'timers' ? 'active' : ''}`}
           onClick={() => setActiveView('timers')}
         >
-          <Timer size={18} />
+          <Icons.Timer size={18} />
           Timers
         </button>
         <button
           className={`nav-item ${activeView === 'archive' ? 'active' : ''}`}
           onClick={() => setActiveView('archive')}
         >
-          <Archive size={18} />
+          <Icons.Archive size={18} />
           Archive
         </button>
         <button className="nav-item" onClick={onOpenSettings}>
-          <Settings size={18} />
+          <Icons.Settings size={18} />
           Settings
         </button>
       </nav>

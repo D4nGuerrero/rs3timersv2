@@ -3,8 +3,10 @@ import './SettingsPanel.css';
 import Rain from './Rain';
 import AuthButton from './AuthButton';
 import fallesi from '/public/fallesi.png';
+import { useTheme } from '../context/ThemeContext';
 
-export default function SettingsPanel({ onClose, onClearAll, user, onLogout, theme, setTheme }) {
+export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
+  const { theme, setTheme } = useTheme();
   return (
     <div
       className="modal-overlay"

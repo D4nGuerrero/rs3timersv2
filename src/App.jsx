@@ -20,8 +20,6 @@ import './styles/themes.css';
 const uid = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 const STORAGE_KEY = 'dannys-timers';
-const THEME_KEY = 'danny-timers-theme';
-
 function loadTimers() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -42,13 +40,7 @@ export default function App() {
   const [createTimerOpen, setCreateTimerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [toast, setToast] = useState({ message: '', visible: false });
-  const [theme, setTheme] = useState(() => localStorage.getItem(THEME_KEY) || 'default');
   const toastTimer = useRef(null);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(THEME_KEY, theme);
-  }, [theme]);
 
   function showToast(message) {
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -265,8 +257,6 @@ export default function App() {
           onClearAll={clearAll}
           user={user}
           onLogout={handleLogout}
-          theme={theme}
-          setTheme={setTheme}
         />
       )}
       <Toast message={toast.message} visible={toast.visible} />

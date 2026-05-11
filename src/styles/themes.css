@@ -127,10 +127,10 @@ image-rendering: pixelated;
 
   /* Buttons */
   --btn-pause: #3d2e17;
-  --btn-pause: url('../assets/themes/runescape/button_middle.png');
   --btn-pause-hover: #5a4020;
-  --btn-pause-hover: url('../assets/themes/runescape/button_middle_hover.png');
   --btn-primary-text: #1a1208;
+  --btn-action-bg: url('../assets/themes/runescape/button_middle.png');
+  --btn-action-bg-hover: url('../assets/themes/runescape/button_middle_hover.png');
 
 
 

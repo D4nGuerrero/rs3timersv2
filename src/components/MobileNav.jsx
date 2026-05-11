@@ -1,4 +1,6 @@
 import { Archive, Plus, Settings, Timer } from 'lucide-react';
+import { useThemeIcons } from '../hooks/useThemeIcons';
+
 import './MobileNav.css';
 
 export default function MobileNav({
@@ -10,6 +12,9 @@ export default function MobileNav({
   settingsOpen,
   user,
 }) {
+
+  const Icons = useThemeIcons();
+
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">
       <button
@@ -23,14 +28,14 @@ export default function MobileNav({
         className={`mobile-nav-item ${activeView === 'timers' ? 'active' : ''}`}
         onClick={onTimers}
       >
-        <Timer size={20} />
+        <Icons.Timer size={20} />
         <span>Timers</span>
       </button>
       <button
         className={`mobile-nav-item ${activeView === 'archive' ? 'active' : ''}`}
         onClick={onArchive}
       >
-        <Archive size={20} />
+        <Icons.Archive size={20} />
         <span>Archive</span>
       </button>
       <button
@@ -38,7 +43,7 @@ export default function MobileNav({
         onClick={onOpenSettings}
       >
         <div className="nav-settings-icon-wrap">
-          <Settings size={20} />
+         <Icons.Settings size={20} />
           <span className={`mobile-auth-dot ${user ? 'signed-in' : 'signed-out'}`} aria-hidden="true" />
         </div>
         <span>Settings</span>
