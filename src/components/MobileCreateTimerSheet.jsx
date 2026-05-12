@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { X, ChevronUp, ChevronDown } from 'lucide-react'
 import './MobileCreateTimerSheet.css'
 
@@ -34,10 +34,14 @@ export default function MobileCreateTimerSheet({ onClose, onAdd }) {
     onClose()
   }
 
+  const overlayRef = useRef(null)
+
   return (
     <div
       className="modal-overlay"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      ref={overlayRef}
+      onMouseDown={(e) => { if (e.target === overlayRef.current) overlayRef.current._closeOnUp = true }}
+      onMouseUp={(e) => { if (overlayRef.current._closeOnUp && e.target === overlayRef.current) onClose(); overlayRef.current._closeOnUp = false }}
     >
       <div className="modal mobile-create-sheet">
         <div className="mobile-sheet-handle" />
