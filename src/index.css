@@ -16,10 +16,15 @@ body {
 
 @font-face {
   font-family: 'RuneScape';
-
-  src: url('assets/themes/runescape/osrs.ttf') format('truetype');
-
+  src: url('assets/themes/runescape/osrs_regular.ttf') format('truetype');
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RuneScape';
+  src: url('assets/themes/runescape/osrs_bold.ttf') format('truetype');
+  font-weight: bold;
   font-style: normal;
 }
 

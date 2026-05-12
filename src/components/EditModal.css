@@ -9,6 +9,8 @@
   z-index: 1000;
 }
 
+
+
 .modal {
   background: var(--card-bg);
   border-image: var(--card-border-img);
@@ -42,7 +44,24 @@
   border-radius: 6px;
   display: flex;
   transition: background 0.1s;
+  width: 26px;
+  height: 23px;
 }
+
+.modal-close::content {
+  /* empty */
+  
+}
+
+[data-theme="runeDscape"] .modal-close {
+  /* reset styling */
+  
+
+  background: url('../assets/themes/runescape/window_close_button_brown_x.png');
+
+}
+
+
 
 .modal-close:hover { background: var(--btn-pause-hover); color: var(--text-primary); }
 
@@ -51,6 +70,14 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+}
+
+[data-theme="ruDnescape"] .modal-close:hover {
+  /* reset styling */
+  
+
+  background: url('../assets/themes/runescape/window_close_button_brown_x_hovered.png');
 
 }
 

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { X, ChevronUp, ChevronDown } from 'lucide-react'
 import './EditModal.css'
+import { useTheme } from '../context/ThemeContext'
 
 function Spinner({ value, onChange, min = 0, max = 99 }) {
   return (
@@ -39,6 +40,7 @@ function tsToInput(ts) {
 }
 
 export default function EditModal({ timer, onSave, onClose }) {
+  const  { theme } = useTheme()
   const [name, setName] = useState(timer.name)
   const { days: d0, hours: h0, minutes: m0 } = msToFields(timer.totalMs)
   const [days, setDays] = useState(d0)
@@ -69,7 +71,9 @@ export default function EditModal({ timer, onSave, onClose }) {
       <div className="modal">
         <div className="modal-header">
           <h3>Edit Timer</h3>
-          <button className="modal-close" onClick={onClose}><X size={18} /></button>
+          <button className="modal-close" onClick={onClose}>
+            {theme === 'runescape' ? <span style={{ display: 'block', width: 16, height: 16 }}></span> : <X size={18} />}
+          </button>
         </div>
 
         <div className="modal-body">

@@ -80,12 +80,24 @@ font-smooth: never;
 text-rendering: geometricPrecision;
 
 font-size: 16px; /* integer size */
-font-weight: normal !important;
 /* line-height: 1; */
 image-rendering: pixelated;
   text-shadow: 1px 1px 0px black;
 
 }
+
+[data-theme="runescape"] .modal-close {
+  width: 26px;
+  height: 23px;
+  background: url('../assets/themes/runescape/window_close_button_brown_x.png');
+}
+
+[data-theme="runescape"] .modal-close:hover {
+  width: 26px;
+  height: 23px;
+  background: url('../assets/themes/runescape/window_close_button_brown_x_hovered.png');
+}
+
 
 
 
@@ -95,9 +107,6 @@ image-rendering: pixelated;
   --font: 'RuneScape', 'DM Sans', 'Segoe UI', sans-serif; 
 
 
-
-
-  
 
     --button-edge-enabled: 1;
   --button-edge-width: 16px;
@@ -138,6 +147,7 @@ image-rendering: pixelated;
   --btn-primary-text: white;
   --btn-action-bg: url('../assets/themes/runescape/button_middle.png');
   --btn-action-bg-hover: url('../assets/themes/runescape/button_middle_hover.png');
+
 
 
 

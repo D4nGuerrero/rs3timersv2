@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { X, ChevronUp, ChevronDown } from 'lucide-react'
 import './EditModal.css'
+import { useTheme } from '../context/ThemeContext'
 
 function Spinner({ value, onChange, min = 0, max = 99 }) {
   return (
@@ -19,6 +20,7 @@ function Spinner({ value, onChange, min = 0, max = 99 }) {
 }
 
 export default function CreateTimerDialog({ onAdd, onClose }) {
+  const { theme } = useTheme()
   const [name, setName] = useState('')
   const [days, setDays] = useState(0)
   const [hours, setHours] = useState(2)
@@ -42,7 +44,9 @@ export default function CreateTimerDialog({ onAdd, onClose }) {
       <div className="modal">
         <div className="modal-header">
           <h3>Create New Timer</h3>
-          <button className="modal-close" onClick={onClose}><X size={18} /></button>
+        <button className="modal-close" onClick={onClose}>
+            {theme === 'runescape' ? <span style={{ display: 'block', width: 16, height: 16 }}></span> : <X size={18} />}
+          </button>
         </div>
 
         <div className="modal-body">
