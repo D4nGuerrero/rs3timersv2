@@ -6,6 +6,7 @@ import { useThemeIcons } from '../hooks/useThemeIcons'
 import ActionButton from './ActionButton'
 import { ProgressBar } from './themes/runescape/ProgressBar'
 import { useTheme } from '../context/ThemeContext'
+import { useNow } from '../hooks/useNow'
 
 
 function formatDate(ts) {
@@ -59,7 +60,6 @@ function RingProgress({ progress }) {
 }
 
 export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, onDelete, onUpdate }) {
-  const [now, setNow] = useState(timer.pausedAt ?? timer.startTime)
   const [menuOpen, setMenuOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
   const [confirmAction, setConfirmAction] = useState(null) // 'delete' | 'reset' | null
@@ -69,12 +69,7 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
   
 
   const isPaused = timer.pausedAt !== null
-
-  useEffect(() => {
-    if (isPaused) return
-    const id = setInterval(() => setNow(Date.now()), 500)
-    return () => clearInterval(id)
-  }, [isPaused])
+  const now = useNow(!isPaused)
 
   // Close menu on outside click
   useEffect(() => {
