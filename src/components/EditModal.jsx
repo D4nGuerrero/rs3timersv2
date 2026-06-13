@@ -6,7 +6,7 @@ import { useTheme } from '../context/ThemeContext'
 function Spinner({ value, onChange, min = 0, max = 99 }) {
   return (
     <div className="edit-spinner">
-      <button onClick={() => onChange(Math.min(max, value + 1))}><ChevronUp size={13} /></button>
+      <button type="button" onClick={() => onChange(Math.min(max, value + 1))}><ChevronUp size={13} /></button>
       <input
         type="number"
         value={value}
@@ -14,7 +14,7 @@ function Spinner({ value, onChange, min = 0, max = 99 }) {
         max={max}
         onChange={e => onChange(Math.max(min, Math.min(max, Number(e.target.value) || 0)))}
       />
-      <button onClick={() => onChange(Math.max(min, value - 1))}><ChevronDown size={13} /></button>
+      <button type="button" onClick={() => onChange(Math.max(min, value - 1))}><ChevronDown size={13} /></button>
     </div>
   )
 }
@@ -47,16 +47,48 @@ export default function EditModal({ timer, onSave, onClose }) {
   const [hours, setHours] = useState(h0)
   const [minutes, setMinutes] = useState(m0)
   const [startInput, setStartInput] = useState(tsToInput(timer.startTime))
+  const [notes, setNotes] = useState(timer.notes ?? '')
+  const [imageUrl, setImageUrl] = useState(timer.imageUrl ?? '')
+  const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
 
-  function handleSave() {
+  async function handleSave(e) {
+    e.preventDefault()
+    setError('')
+
     const totalMs = fieldsToMs({ days, hours, minutes })
-    if (!name.trim() || totalMs === 0) return
+    if (!name.trim()) {
+      setError('Timer name is required.')
+      return
+    }
+    if (totalMs === 0) {
+      setError('Timer duration must be greater than zero.')
+      return
+    }
+
     const newStart = new Date(startInput).getTime()
-    onSave({
+    const changes = {
       name: name.trim(),
       totalMs,
       startTime: isNaN(newStart) ? timer.startTime : newStart,
-    })
+      notes: notes.trim(),
+      imageUrl: imageUrl.trim(),
+    }
+    console.log('[ui] submit edit', { timerId: timer.id, changes })
+    try {
+      setSaving(true)
+      const saved = await onSave(changes)
+      if (!saved) {
+        setError('Could not save changes to Supabase.')
+        return
+      }
+      onClose()
+    } catch (err) {
+      console.error('[ui] edit submit failed', err)
+      setError('Could not save changes to Supabase.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const overlayRef = useRef(null)
@@ -66,33 +98,43 @@ export default function EditModal({ timer, onSave, onClose }) {
       className="modal-overlay"
       ref={overlayRef}
       onMouseDown={(e) => { if (e.target === overlayRef.current) overlayRef.current._closeOnUp = true }}
-      onMouseUp={(e) => { if (overlayRef.current._closeOnUp && e.target === overlayRef.current) onClose(); overlayRef.current._closeOnUp = false }}
+      onMouseUp={(e) => { if (!saving && overlayRef.current._closeOnUp && e.target === overlayRef.current) onClose(); overlayRef.current._closeOnUp = false }}
     >
-      <div className="modal">
+      <form className="modal" onSubmit={handleSave}>
         <div className="modal-header">
           <h3>Edit Timer</h3>
-          <button className="modal-close" onClick={onClose}>
+          <button type="button" className="modal-close" onClick={onClose} disabled={saving}>
             {theme === 'runescape' ? <span style={{ display: 'block', width: 16, height: 16 }}></span> : <X size={18} />}
           </button>
         </div>
 
         <div className="modal-body">
+          {error && (
+            <div className="edit-error" role="alert">
+              {error}
+            </div>
+          )}
+
           <label className="field-label">Timer Name</label>
           <input
-            className="modal-input"
+            className={`modal-input${error && error.includes('name') ? ' error' : ''}`}
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value)
+              if (error && error.includes('name')) setError('')
+            }}
             placeholder="Timer Name"
+            aria-invalid={Boolean(error && error.includes('name'))}
           />
 
           <label className="field-label">Duration</label>
-          <div className="duration-row">
+          <div className={`duration-row${error && error.includes('duration') ? ' error' : ''}`}>
             <div className="spinner-group">
               <Spinner value={days} onChange={setDays} max={365} />
               <span className="spinner-label">Days</span>
             </div>
             <div className="spinner-group">
-              <Spinner value={hours} onChange={setHours} max={23} />
+              <Spinner value={hours} onChange={setHours} max={9999} />
               <span className="spinner-label">Hours</span>
             </div>
             <div className="spinner-group">
@@ -100,6 +142,23 @@ export default function EditModal({ timer, onSave, onClose }) {
               <span className="spinner-label">Minutes</span>
             </div>
           </div>
+
+          <label className="field-label">Notes</label>
+          <textarea
+            className="modal-input modal-textarea"
+            rows="4"
+            placeholder="Optional notes for this timer"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          />
+
+          <label className="field-label">Image URL</label>
+          <input
+            className="modal-input"
+            placeholder="Optional image URL"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
 
           <label className="field-label">
             Start Time
@@ -109,15 +168,19 @@ export default function EditModal({ timer, onSave, onClose }) {
             className="modal-input"
             type="datetime-local"
             value={startInput}
-            onChange={e => setStartInput(e.target.value)}
+            onChange={(e) => {
+              setStartInput(e.target.value)
+            }}
           />
         </div>
 
         <div className="modal-footer">
-          <button className="btn-cancel" onClick={onClose}>Cancel</button>
-          <button className="btn-save" onClick={handleSave}>Save Changes</button>
+          <button type="button" className="btn-cancel" onClick={onClose} disabled={saving}>Cancel</button>
+          <button type="submit" className="btn-save" disabled={saving}>
+            {saving ? 'Saving...' : 'Save Changes'}
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   )
 }

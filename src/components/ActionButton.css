@@ -1,5 +1,5 @@
 .action-btn {
-    position: relative;
+  position: relative;
 
   height: 32px;
   padding: 0 14px;
@@ -8,14 +8,12 @@
   border: none;
 
   background-repeat: repeat-x;
- 
 
   color: var(--text-primary);
 }
 
-
 .action-btn {
-    position: relative;
+  position: relative;
 
   height: 32px;
   padding: 0 14px;
@@ -26,14 +24,15 @@
   background-image: var(--btn-action-bg);
 
   background-repeat: repeat-x;
- 
 
   color: var(--text-primary);
- border-radius: 8px;
-
+  border-radius: 8px;
 }
 
-.action-btn::before {transition: background 0.15s, color 0.15s;
+.action-btn::before {
+  transition:
+    background 0.15s,
+    color 0.15s;
   content: "";
 
   position: absolute;
@@ -45,17 +44,20 @@
   background-image: var(--button-edges);
   background-repeat: no-repeat;
 
-   background-size: 16px 32px;
+  background-size: 16px 32px;
 
   image-rendering: pixelated;
 
   pointer-events: none;
-    left: -4px;
+  left: -4px;
 
   background-position: 0 0;
 }
-.action-btn::after {transition: background 0.15s, color 0.15s;
- content: "";
+.action-btn::after {
+  transition:
+    background 0.15s,
+    color 0.15s;
+  content: "";
 
   position: absolute;
   top: 0;
@@ -72,11 +74,17 @@
 
   pointer-events: none;
 
-   right: -4px;
-    /* SHIFT SPRITE LEFT */
+  right: -4px;
+  /* SHIFT SPRITE LEFT */
   background-position: -8px 0;
 }
 
-.action-btn:hover::before,.action-btn:hover::after { background-image: var(--button-edges-hover); }
+.action-btn:hover::before,
+.action-btn:hover::after {
+  background-image: var(--button-edges-hover);
+}
 
-.action-btn:hover { background: var(--btn-action-bg-hover); color: var(--accent); }
+.action-btn:hover {
+  background: var(--btn-action-bg-hover);
+  color: var(--accent);
+}

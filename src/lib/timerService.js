@@ -1,5 +1,32 @@
 import { supabase } from './supabase';
 
+const DB_TIMEOUT_MS = 8000;
+
+async function withRetry(action, label, attempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort(`${label} timed out after ${DB_TIMEOUT_MS}ms`);
+    }, DB_TIMEOUT_MS);
+
+    try {
+      if (attempt > 1) {
+        console.log(`[db] retry ${label}`, { attempt, attempts });
+      }
+      return await action(controller.signal);
+    } catch (error) {
+      lastError = error;
+      console.error(`[db] ${label} attempt failed`, { attempt, error });
+      if (attempt === attempts) break;
+      await new Promise((resolve) => setTimeout(resolve, 250 * attempt));
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+  throw lastError;
+}
+
 function fromDb(row) {
   return {
     id: row.id,
@@ -8,6 +35,8 @@ function fromDb(row) {
     startTime: row.start_time,
     pausedAt: row.paused_at,
     hidden: row.hidden,
+    notes: row.notes ?? '',
+    imageUrl: row.image_url ?? '',
     createdAt: row.created_at,
   };
 }
@@ -21,38 +50,79 @@ function toDb(userId, timer) {
     start_time: timer.startTime,
     paused_at: timer.pausedAt ?? null,
     hidden: timer.hidden,
+    notes: timer.notes ?? '',
+    image_url: timer.imageUrl ?? '',
     created_at: timer.createdAt,
   };
 }
 
 export async function fetchTimers(userId) {
-  const { data, error } = await supabase
-    .from('timers')
-    .select('*')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false });
-  if (error) throw error;
+  console.log('[db] fetchTimers start', { userId });
+  const { data } = await withRetry(
+    async (signal) => {
+      const response = await supabase
+        .from('timers')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .abortSignal(signal);
+      if (response.error) throw response.error;
+      return response;
+    },
+    'fetchTimers',
+  );
+  console.log('[db] fetchTimers success', { userId, count: data?.length ?? 0 });
   return data.map(fromDb);
 }
 
 export async function saveTimer(userId, timer) {
-  const { error } = await supabase.from('timers').upsert(toDb(userId, timer));
-  if (error) throw error;
+  const payload = toDb(userId, timer);
+  console.log('[db] saveTimer start', payload);
+  await withRetry(
+    async (signal) => {
+      const response = await supabase
+        .from('timers')
+        .upsert(payload, { onConflict: 'id' })
+        .abortSignal(signal);
+      if (response.error) throw response.error;
+      return response;
+    },
+    'saveTimer',
+  );
+  console.log('[db] saveTimer success', payload.id);
 }
 
 export async function deleteTimer(userId, timerId) {
-  const { error } = await supabase
-    .from('timers')
-    .delete()
-    .eq('id', timerId)
-    .eq('user_id', userId);
-  if (error) throw error;
+  console.log('[db] deleteTimer start', { userId, timerId });
+  await withRetry(
+    async (signal) => {
+      const response = await supabase
+        .from('timers')
+        .delete()
+        .eq('id', timerId)
+        .eq('user_id', userId)
+        .abortSignal(signal);
+      if (response.error) throw response.error;
+      return response;
+    },
+    'deleteTimer',
+  );
+  console.log('[db] deleteTimer success', { userId, timerId });
 }
 
-export async function saveAllTimers(userId, timers) {
-  if (!timers.length) return;
-  const { error } = await supabase
-    .from('timers')
-    .upsert(timers.map((t) => toDb(userId, t)));
-  if (error) throw error;
+export async function deleteAllTimers(userId) {
+  console.log('[db] deleteAllTimers start', { userId });
+  await withRetry(
+    async (signal) => {
+      const response = await supabase
+        .from('timers')
+        .delete()
+        .eq('user_id', userId)
+        .abortSignal(signal);
+      if (response.error) throw response.error;
+      return response;
+    },
+    'deleteAllTimers',
+  );
+  console.log('[db] deleteAllTimers success', { userId });
 }

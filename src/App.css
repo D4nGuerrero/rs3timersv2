@@ -2,6 +2,8 @@
   display: flex;
   height: 100dvh;
   overflow: hidden;
+  position: relative;
+  isolation: isolate;
   padding: 16px;
   gap: 0;
   background: var(--bg);

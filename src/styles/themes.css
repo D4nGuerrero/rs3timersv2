@@ -2,6 +2,7 @@
    Default theme
 ───────────────────────────────────────────── */
 [data-theme="default"] {
+  --font: "DM Sans", "Segoe UI", sans-serif;
   /* Layout colours */
   --bg: #5b9bd5;
   --sidebar-bg: #d6e8f7;
@@ -31,6 +32,13 @@
   --btn-pause-hover: #e0eefa;
   --btn-primary-text: #ffffff;
   --btn-radiius: 8px;
+  --btn-radius: 8px;
+  --btn-action-bg: #f0f6fc;
+  --btn-action-bg-hover: #e0eefa;
+  --btn-action-text: var(--text-primary);
+  --btn-action-text-hover: var(--accent);
+  --button-edge-enabled: 0;
+  --card-border-img: none;
 
   /* Sidebar active state */
   --sidebar-active: #4a90d9;
@@ -43,8 +51,10 @@
   --shadow-card: 0 2px 8px rgba(74, 144, 217, 0.08);
   --shadow-card-hover: 0 4px 16px rgba(74, 144, 217, 0.14);
   --shadow-done: 0 0 0 2px #4a90d9, 0 4px 20px rgba(74, 144, 217, 0.25);
-  --shadow-done-pulse-start: 0 0 0 2px #4a90d9, 0 4px 20px rgba(74, 144, 217, 0.2);
-  --shadow-done-pulse-mid: 0 0 0 3px #4a90d9, 0 4px 28px rgba(74, 144, 217, 0.4);
+  --shadow-done-pulse-start:
+    0 0 0 2px #4a90d9, 0 4px 20px rgba(74, 144, 217, 0.2);
+  --shadow-done-pulse-mid:
+    0 0 0 3px #4a90d9, 0 4px 28px rgba(74, 144, 217, 0.4);
   --shadow-modal: 0 20px 60px rgba(20, 50, 90, 0.2);
   --shadow-dropdown: 0 8px 24px rgba(30, 60, 100, 0.12);
   --shadow-add-btn: 0 10px 20px rgba(74, 144, 217, 0.35);
@@ -74,55 +84,49 @@
 }
 
 [data-theme="runescape"] *:not(.auth-login-btn):not(.auth-logout-btn) {
-box-sizing: border-box;
-font-smooth: never;
--webkit-font-smoothing: none;
-text-rendering: geometricPrecision;
+  box-sizing: border-box;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+  text-rendering: geometricPrecision;
 
-font-size: 16px; /* integer size */
-/* line-height: 1; */
-image-rendering: pixelated;
+  font-size: 16px; /* integer size */
+  /* line-height: 1; */
+  image-rendering: pixelated;
   text-shadow: 1px 1px 0px black;
-
 }
 
 [data-theme="runescape"] .modal-close {
   width: 26px;
   height: 23px;
-  background: url('../assets/themes/runescape/window_close_button_brown_x.png');
+  background: url("../assets/themes/runescape/window_close_button_brown_x.png");
 }
 
 [data-theme="runescape"] .modal-close:hover {
   width: 26px;
   height: 23px;
-  background: url('../assets/themes/runescape/window_close_button_brown_x_hovered.png');
+  background: url("../assets/themes/runescape/window_close_button_brown_x_hovered.png");
 }
 
-
-
-
 [data-theme="runescape"] {
-
   /* FONT */
-  --font: 'RuneScape', 'DM Sans', 'Segoe UI', sans-serif; 
+  --font: "RuneScape", "DM Sans", "Segoe UI", sans-serif;
 
-
-
-    --button-edge-enabled: 1;
+  --button-edge-enabled: 1;
   --button-edge-width: 16px;
---btn-radius: 0px;
-  --button-edges: url('../assets/themes/runescape/button_edges.png');
-  --button-edges-hover: url('../assets/themes/runescape/button_edges_hover.png');
- 
+  --btn-radius: 0px;
+  --button-edges: url("../assets/themes/runescape/button_edges.png");
+  --button-edges-hover: url("../assets/themes/runescape/button_edges_hover.png");
+
   /* Layout colours */
   --bg: #1a1208;
   --sidebar-bg: #2a1f0e;
   --main-bg: #3d2e17;
-  --main-bg: url('../assets/themes/runescape/bg0.png');
+  --main-bg: url("../assets/themes/runescape/bg0.png");
   /* --card-bg: #4a3820; */
-  --card-bg: url('../assets/themes/runescape/bg1.png');
---card-border-img: url('../assets/themes/runescape/borders.png') 32 32 32 32 / 32px repeat;
- 
+  --card-bg: url("../assets/themes/runescape/bg1.png");
+  --card-border-img: url("../assets/themes/runescape/borders.png") 32 32 32 32 /
+    32px repeat;
+
   /* Accent */
   --accent: #c8a951;
   --accent-dark: #a88a38;
@@ -145,12 +149,10 @@ image-rendering: pixelated;
   --btn-pause: #3d2e17;
   --btn-pause-hover: #5a4020;
   --btn-primary-text: white;
-  --btn-action-bg: url('../assets/themes/runescape/button_middle.png');
-  --btn-action-bg-hover: url('../assets/themes/runescape/button_middle_hover.png');
-
-
-
-
+  --btn-action-bg: url("../assets/themes/runescape/button_middle.png");
+  --btn-action-bg-hover: url("../assets/themes/runescape/button_middle_hover.png");
+  --btn-action-text: var(--text-primary);
+  --btn-action-text-hover: yellow;
 
   /* Sidebar active state */
   --sidebar-active: #c8a951;
@@ -184,6 +186,604 @@ image-rendering: pixelated;
   /* Theme asset paths — drop images in src/assets/themes/runescape/ */
   /* --theme-bg-image: url('../assets/themes/runescape/bg.png'); */
   /* --theme-border-image: url('../assets/themes/runescape/border.png'); */
+}
 
+/* ─────────────────────────────────────────────
+   Synthwave theme — neon dusk & soft motion
+───────────────────────────────────────────── */
 
+[data-theme="synthwave"] {
+  --font: "DM Sans", "Segoe UI", sans-serif;
+
+  --button-edge-enabled: 0;
+  --button-edge-width: 16px;
+  --btn-radius: 12px;
+  --card-border-img: none;
+  --synth-border-base: rgba(125, 249, 255, 0.16);
+
+  /* Layout colours */
+  --bg: #12031f;
+  --sidebar-bg: linear-gradient(
+    180deg,
+    rgba(30, 11, 55, 0.96),
+    rgba(12, 8, 37, 0.94)
+  );
+  --main-bg:
+    radial-gradient(circle at top, rgba(52, 23, 94, 0.72), transparent 42%),
+    linear-gradient(180deg, rgba(21, 13, 48, 0.96), rgba(9, 8, 28, 0.98));
+  --card-bg: linear-gradient(
+    180deg,
+    rgba(28, 17, 54, 0.96),
+    rgba(16, 11, 35, 0.96)
+  );
+
+  /* Accent */
+  --accent: #ff49c6;
+  --accent-dark: #7df9ff;
+  --accent-hover-bg: rgba(255, 73, 198, 0.14);
+  --accent-active-bg: rgba(125, 249, 255, 0.14);
+
+  /* Text */
+  --text-primary: #f7ecff;
+  --text-secondary: #d7b6ff;
+  --text-muted: #8c7eb7;
+
+  /* Borders & inputs */
+  --border: rgba(125, 249, 255, 0.28);
+
+  /* Ring */
+  --ring-track: rgba(125, 249, 255, 0.16);
+  --ring-fill: #7df9ff;
+
+  /* Buttons */
+  --btn-pause: linear-gradient(
+    135deg,
+    rgba(49, 24, 89, 0.95),
+    rgba(24, 13, 50, 0.95)
+  );
+  --btn-pause-hover: linear-gradient(
+    135deg,
+    rgba(72, 30, 124, 0.95),
+    rgba(38, 18, 78, 0.95)
+  );
+  --btn-primary-text: #f7ecff;
+  --btn-action-bg: linear-gradient(
+    135deg,
+    rgba(34, 17, 63, 0.98),
+    rgba(18, 10, 39, 0.98)
+  );
+  --btn-action-bg-hover: linear-gradient(
+    135deg,
+    rgba(48, 22, 88, 0.98),
+    rgba(28, 14, 57, 0.98)
+  );
+  --btn-action-text: #7df9ff;
+  --btn-action-text-hover: #ffe66d;
+
+  /* Sidebar active state */
+  --sidebar-active: linear-gradient(
+    135deg,
+    rgba(255, 73, 198, 0.88),
+    rgba(125, 249, 255, 0.82)
+  );
+  --sidebar-active-text: #12031f;
+
+  /* Overlays */
+  --overlay-bg: rgba(7, 4, 17, 0.72);
+
+  /* Shadows */
+  --shadow-card:
+    0 0 0 1px rgba(125, 249, 255, 0.18), 0 14px 30px rgba(7, 4, 17, 0.42);
+  --shadow-card-hover:
+    0 0 0 1px rgba(255, 73, 198, 0.38), 0 18px 40px rgba(125, 249, 255, 0.18);
+  --shadow-done:
+    0 0 0 1px rgba(125, 249, 255, 0.68), 0 0 22px rgba(255, 73, 198, 0.45),
+    0 16px 36px rgba(7, 4, 17, 0.55);
+  --shadow-done-pulse-start:
+    0 0 0 1px rgba(125, 249, 255, 0.58), 0 0 18px rgba(255, 73, 198, 0.32),
+    0 16px 36px rgba(7, 4, 17, 0.42);
+  --shadow-done-pulse-mid:
+    0 0 0 1px rgba(255, 73, 198, 0.68), 0 0 30px rgba(125, 249, 255, 0.42),
+    0 18px 40px rgba(7, 4, 17, 0.62);
+  --shadow-modal:
+    0 24px 60px rgba(0, 0, 0, 0.48), 0 0 24px rgba(255, 73, 198, 0.12);
+  --shadow-dropdown:
+    0 12px 28px rgba(0, 0, 0, 0.36), 0 0 16px rgba(125, 249, 255, 0.12);
+  --shadow-add-btn:
+    0 0 20px rgba(255, 73, 198, 0.38), 0 12px 28px rgba(7, 4, 17, 0.42);
+
+  /* Badges */
+  --badge-paused-bg: rgba(255, 230, 109, 0.18);
+  --badge-paused-text: #ffe66d;
+  --badge-done-bg: rgba(125, 249, 255, 0.16);
+  --badge-done-text: #7df9ff;
+
+  /* Danger */
+  --danger: #ff6b8f;
+  --danger-bg: rgba(255, 107, 143, 0.14);
+  --danger-bg-hover: rgba(255, 107, 143, 0.22);
+  --danger-dark: #ff8cad;
+}
+
+[data-theme="synthwave"] body {
+  background:
+    radial-gradient(circle at top, rgba(255, 73, 198, 0.2), transparent 34%),
+    radial-gradient(
+      circle at bottom,
+      rgba(125, 249, 255, 0.12),
+      transparent 30%
+    ),
+    #12031f;
+}
+
+[data-theme="synthwave"] .app {
+  background:
+    radial-gradient(circle at top, rgba(255, 73, 198, 0.2), transparent 30%),
+    linear-gradient(135deg, #11031c 0%, #1a0934 35%, #26114f 68%, #0d0827 100%);
+  background-size: 180% 180%;
+  animation: synthwave-sky 18s ease infinite;
+}
+
+[data-theme="synthwave"] .app::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background:
+    linear-gradient(
+      transparent 0 76%,
+      rgba(255, 73, 198, 0.18) 76%,
+      rgba(125, 249, 255, 0.22) 77%,
+      transparent 77%
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 22px,
+      rgba(125, 249, 255, 0.08) 23px,
+      rgba(125, 249, 255, 0.08) 24px
+    );
+}
+
+[data-theme="synthwave"] .sidebar,
+[data-theme="synthwave"] .main,
+[data-theme="synthwave"] .timer-card,
+[data-theme="synthwave"] .dropdown,
+[data-theme="synthwave"] .modal,
+[data-theme="synthwave"] .mobile-nav,
+[data-theme="synthwave"] .settings-modal {
+  position: relative;
+  border: 1px solid transparent;
+}
+
+[data-theme="synthwave"] .sidebar,
+[data-theme="synthwave"] .main,
+[data-theme="synthwave"] .mobile-nav {
+  box-shadow:
+    0 0 0 1px rgba(255, 73, 198, 0.12),
+    0 20px 50px rgba(0, 0, 0, 0.36);
+}
+
+[data-theme="synthwave"] .sidebar::before,
+[data-theme="synthwave"] .main::before,
+[data-theme="synthwave"] .timer-card::before,
+[data-theme="synthwave"] .dropdown::before,
+[data-theme="synthwave"] .modal::before,
+[data-theme="synthwave"] .mobile-nav::before,
+[data-theme="synthwave"] .settings-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(125, 249, 255, 0.22),
+    rgba(255, 73, 198, 0.18)
+  );
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+[data-theme="synthwave"] .sidebar::after,
+[data-theme="synthwave"] .main::after,
+[data-theme="synthwave"] .timer-card::after,
+[data-theme="synthwave"] .dropdown::after,
+[data-theme="synthwave"] .modal::after,
+[data-theme="synthwave"] .mobile-nav::after,
+[data-theme="synthwave"] .settings-modal::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--synth-border-angle, 0deg),
+    transparent 0deg,
+    transparent 300deg,
+    rgba(125, 249, 255, 0.98) 328deg,
+    rgba(255, 73, 198, 0.95) 344deg,
+    rgba(255, 230, 109, 0.98) 352deg,
+    transparent 360deg
+  );
+  filter: drop-shadow(0 0 8px rgba(125, 249, 255, 0.32))
+    drop-shadow(0 0 12px rgba(255, 73, 198, 0.2));
+  animation: synthwave-border-light 3.4s linear infinite;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+[data-theme="synthwave"] .action-btn,
+[data-theme="synthwave"] .btn-save,
+[data-theme="synthwave"] .add-btn,
+[data-theme="synthwave"] .mobile-nav-add,
+[data-theme="synthwave"] .theme-btn.active,
+[data-theme="synthwave"] .btn-cancel,
+[data-theme="synthwave"] .btn-preset-trigger,
+[data-theme="synthwave"] .theme-btn {
+  border: 1px solid rgba(125, 249, 255, 0.28);
+  background: linear-gradient(
+    135deg,
+    rgba(27, 15, 53, 0.96),
+    rgba(16, 10, 34, 0.96)
+  );
+  box-shadow:
+    0 0 18px rgba(255, 73, 198, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="synthwave"] .action-btn,
+[data-theme="synthwave"] .btn-save,
+[data-theme="synthwave"] .add-btn,
+[data-theme="synthwave"] .mobile-nav-add {
+  color: #7df9ff;
+  text-shadow: none;
+}
+
+[data-theme="synthwave"] .btn-save,
+[data-theme="synthwave"] .add-btn,
+[data-theme="synthwave"] .mobile-nav-add {
+  background: linear-gradient(
+    135deg,
+    rgba(41, 18, 73, 0.98),
+    rgba(24, 12, 50, 0.98)
+  );
+}
+
+[data-theme="synthwave"] .action-btn:hover,
+[data-theme="synthwave"] .btn-save:hover,
+[data-theme="synthwave"] .add-btn:hover,
+[data-theme="synthwave"] .mobile-nav-add:hover,
+[data-theme="synthwave"] .btn-cancel:hover,
+[data-theme="synthwave"] .btn-preset-trigger:hover,
+[data-theme="synthwave"] .theme-btn:hover,
+[data-theme="synthwave"] .theme-btn.active {
+  color: #ffe66d;
+  border-color: rgba(255, 73, 198, 0.5);
+  background: linear-gradient(
+    135deg,
+    rgba(49, 22, 88, 0.98),
+    rgba(28, 14, 57, 0.98)
+  );
+  box-shadow:
+    0 0 24px rgba(125, 249, 255, 0.26),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="synthwave"] .modal-close:hover,
+[data-theme="synthwave"] .menu-btn:hover,
+[data-theme="synthwave"] .preset-entry-card:hover,
+[data-theme="synthwave"] .preset-category-card:hover {
+  box-shadow: 0 0 18px rgba(125, 249, 255, 0.12);
+}
+
+[data-theme="synthwave"] .timer-card-image,
+[data-theme="synthwave"] .default-timer-image,
+[data-theme="synthwave"] .preset-entry-image {
+  filter: drop-shadow(0 0 14px rgba(125, 249, 255, 0.25));
+}
+
+[data-theme="synthwave"] .ring-fill,
+[data-theme="synthwave"] .ring-icon,
+[data-theme="synthwave"] .brand-icon,
+[data-theme="synthwave"] .notes-icon-btn,
+[data-theme="synthwave"] .timer-notes svg {
+  filter: drop-shadow(0 0 8px rgba(125, 249, 255, 0.35));
+}
+
+/* ─────────────────────────────────────────────
+   Themed scrollbars
+───────────────────────────────────────────── */
+
+.timers-grid-scroll,
+.modal-body,
+.settings-body {
+  scrollbar-gutter: stable;
+}
+
+[data-theme="default"] .timers-grid-scroll,
+[data-theme="default"] .modal-body,
+[data-theme="default"] .settings-body {
+  scrollbar-width: thin;
+  scrollbar-color: #7aaee2 #dfeefd;
+}
+
+[data-theme="default"] .timers-grid-scroll::-webkit-scrollbar,
+[data-theme="default"] .modal-body::-webkit-scrollbar,
+[data-theme="default"] .settings-body::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="default"] .timers-grid-scroll::-webkit-scrollbar-track,
+[data-theme="default"] .modal-body::-webkit-scrollbar-track,
+[data-theme="default"] .settings-body::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, #edf6fe, #dcecfb);
+  border-radius: 999px;
+}
+
+[data-theme="default"] .timers-grid-scroll::-webkit-scrollbar-thumb,
+[data-theme="default"] .modal-body::-webkit-scrollbar-thumb,
+[data-theme="default"] .settings-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8cc0ef, #5d99d6);
+  border-radius: 999px;
+  border: 2px solid #e8f2fb;
+}
+
+[data-theme="default"] .timers-grid-scroll::-webkit-scrollbar-thumb:hover,
+[data-theme="default"] .modal-body::-webkit-scrollbar-thumb:hover,
+[data-theme="default"] .settings-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #9dd0fb, #4a90d9);
+}
+
+[data-theme="runescape"] .timers-grid-scroll,
+[data-theme="runescape"] .modal-body,
+[data-theme="runescape"] .settings-body {
+  scrollbar-width: thin;
+  scrollbar-color: #8e7a52 #3b2c14;
+}
+
+[data-theme="runescape"] .notes-icon-btn {
+  color: var(--text-muted);
+  color: rgb(255, 204, 94);
+  color: var(--accent);
+}
+
+[data-theme="runescape"] .timers-grid-scroll::-webkit-scrollbar,
+[data-theme="runescape"] .modal-body::-webkit-scrollbar,
+[data-theme="runescape"] .settings-body::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+  background: #2a1f0e;
+}
+
+[data-theme="runescape"] .timers-grid-scroll::-webkit-scrollbar-corner,
+[data-theme="runescape"] .modal-body::-webkit-scrollbar-corner,
+[data-theme="runescape"] .settings-body::-webkit-scrollbar-corner {
+  background: #2a1f0e;
+}
+
+[data-theme="runescape"] .timers-grid-scroll::-webkit-scrollbar-track,
+[data-theme="runescape"] .modal-body::-webkit-scrollbar-track,
+[data-theme="runescape"] .settings-body::-webkit-scrollbar-track {
+  background-image: url("../assets/themes/runescape/scrollbar/transparent_thumb_background.png");
+  background-repeat: repeat-y;
+  background-size: 16px 5px;
+  background-color: #2c210f;
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"] .timers-grid-scroll::-webkit-scrollbar-thumb,
+[data-theme="runescape"] .modal-body::-webkit-scrollbar-thumb,
+[data-theme="runescape"] .settings-body::-webkit-scrollbar-thumb {
+  background-image:
+    url("../assets/themes/runescape/scrollbar/thumb_top.png"),
+    url("../assets/themes/runescape/scrollbar/thumb_middle.png"),
+    url("../assets/themes/runescape/scrollbar/thumb_bottom.png");
+  background-repeat: no-repeat, repeat-y, no-repeat;
+  background-position:
+    top center,
+    center,
+    bottom center;
+  background-size:
+    16px 5px,
+    16px 5px,
+    16px 5px;
+  background-color: #6b5a35;
+  border: 0;
+  border-radius: 0;
+  min-height: 24px;
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"] .timers-grid-scroll::-webkit-scrollbar-thumb:hover,
+[data-theme="runescape"] .modal-body::-webkit-scrollbar-thumb:hover,
+[data-theme="runescape"] .settings-body::-webkit-scrollbar-thumb:hover {
+  background-image:
+    url("../assets/themes/runescape/scrollbar/thumb_top.png"),
+    url("../assets/themes/runescape/scrollbar/thumb_middle_dark.png"),
+    url("../assets/themes/runescape/scrollbar/thumb_bottom.png");
+}
+
+[data-theme="runescape"]
+  .timers-grid-scroll::-webkit-scrollbar-button:single-button:vertical:decrement,
+[data-theme="runescape"]
+  .modal-body::-webkit-scrollbar-button:single-button:vertical:decrement,
+[data-theme="runescape"]
+  .settings-body::-webkit-scrollbar-button:single-button:vertical:decrement {
+  height: 16px;
+  background: url("../assets/themes/runescape/scrollbar/arrow_up.png") center /
+    16px 16px no-repeat;
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"]
+  .timers-grid-scroll::-webkit-scrollbar-button:single-button:vertical:increment,
+[data-theme="runescape"]
+  .modal-body::-webkit-scrollbar-button:single-button:vertical:increment,
+[data-theme="runescape"]
+  .settings-body::-webkit-scrollbar-button:single-button:vertical:increment {
+  height: 16px;
+  background: url("../assets/themes/runescape/scrollbar/arrow_down.png")
+    center / 16px 16px no-repeat;
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"]
+  .timers-grid-scroll::-webkit-scrollbar-button:single-button:horizontal:decrement,
+[data-theme="runescape"]
+  .modal-body::-webkit-scrollbar-button:single-button:horizontal:decrement,
+[data-theme="runescape"]
+  .settings-body::-webkit-scrollbar-button:single-button:horizontal:decrement {
+  width: 16px;
+  background: url("../assets/themes/runescape/scrollbar/arrow_left.png")
+    center / 16px 16px no-repeat;
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"]
+  .timers-grid-scroll::-webkit-scrollbar-button:single-button:horizontal:increment,
+[data-theme="runescape"]
+  .modal-body::-webkit-scrollbar-button:single-button:horizontal:increment,
+[data-theme="runescape"]
+  .settings-body::-webkit-scrollbar-button:single-button:horizontal:increment {
+  width: 16px;
+  background: url("../assets/themes/runescape/scrollbar/arrow_right.png")
+    center / 16px 16px no-repeat;
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"]
+  .timers-grid-scroll::-webkit-scrollbar-track:horizontal,
+[data-theme="runescape"] .modal-body::-webkit-scrollbar-track:horizontal,
+[data-theme="runescape"] .settings-body::-webkit-scrollbar-track:horizontal {
+  background-image: url("../assets/themes/runescape/scrollbar/transparent_thumb_middle.png");
+  background-repeat: repeat-x;
+  background-size: 5px 16px;
+  background-color: #2c210f;
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"]
+  .timers-grid-scroll::-webkit-scrollbar-thumb:horizontal,
+[data-theme="runescape"] .modal-body::-webkit-scrollbar-thumb:horizontal,
+[data-theme="runescape"] .settings-body::-webkit-scrollbar-thumb:horizontal {
+  background-image:
+    url("../assets/themes/runescape/scrollbar/horizontal_thumb_left.png"),
+    url("../assets/themes/runescape/scrollbar/horizontal_thumb_middle.png"),
+    url("../assets/themes/runescape/scrollbar/horizontal_thumb_right.png");
+  background-repeat: no-repeat, repeat-x, no-repeat;
+  background-position:
+    left center,
+    center,
+    right center;
+  background-size:
+    5px 16px,
+    5px 16px,
+    5px 16px;
+  background-color: #6b5a35;
+  border-radius: 0;
+  min-width: 24px;
+  image-rendering: pixelated;
+}
+
+[data-theme="runescape"]
+  .timers-grid-scroll::-webkit-scrollbar-thumb:horizontal:hover,
+[data-theme="runescape"] .modal-body::-webkit-scrollbar-thumb:horizontal:hover,
+[data-theme="runescape"]
+  .settings-body::-webkit-scrollbar-thumb:horizontal:hover {
+  background-image:
+    url("../assets/themes/runescape/scrollbar/horizontal_thumb_left.png"),
+    url("../assets/themes/runescape/scrollbar/horizontal_thumb_middle_dark.png"),
+    url("../assets/themes/runescape/scrollbar/horizontal_thumb_right.png");
+}
+
+[data-theme="synthwave"] .timers-grid-scroll,
+[data-theme="synthwave"] .modal-body,
+[data-theme="synthwave"] .settings-body {
+  scrollbar-width: thin;
+  scrollbar-color: #7df9ff rgba(19, 11, 36, 0.95);
+}
+
+[data-theme="synthwave"] .timers-grid-scroll::-webkit-scrollbar,
+[data-theme="synthwave"] .modal-body::-webkit-scrollbar,
+[data-theme="synthwave"] .settings-body::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="synthwave"] .timers-grid-scroll::-webkit-scrollbar-track,
+[data-theme="synthwave"] .modal-body::-webkit-scrollbar-track,
+[data-theme="synthwave"] .settings-body::-webkit-scrollbar-track {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 10, 39, 0.96),
+    rgba(31, 15, 57, 0.96)
+  );
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(125, 249, 255, 0.14);
+}
+
+[data-theme="synthwave"] .timers-grid-scroll::-webkit-scrollbar-thumb,
+[data-theme="synthwave"] .modal-body::-webkit-scrollbar-thumb,
+[data-theme="synthwave"] .settings-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(125, 249, 255, 0.95),
+    rgba(255, 73, 198, 0.92)
+  );
+  border-radius: 999px;
+  border: 2px solid rgba(19, 11, 36, 0.95);
+  box-shadow: 0 0 10px rgba(125, 249, 255, 0.32);
+}
+
+[data-theme="synthwave"] .timers-grid-scroll::-webkit-scrollbar-thumb:hover,
+[data-theme="synthwave"] .modal-body::-webkit-scrollbar-thumb:hover,
+[data-theme="synthwave"] .settings-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 230, 109, 0.98),
+    rgba(255, 73, 198, 0.95)
+  );
+  box-shadow: 0 0 14px rgba(255, 230, 109, 0.3);
+}
+
+@keyframes synthwave-sky {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@property --synth-border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes synthwave-border-light {
+  0% {
+    --synth-border-angle: 0deg;
+  }
+  100% {
+    --synth-border-angle: 360deg;
+  }
 }

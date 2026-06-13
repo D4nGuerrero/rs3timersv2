@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './SettingsPanel.css';
 import Rain from './Rain';
 import AuthButton from './AuthButton';
@@ -6,25 +7,34 @@ import { useTheme } from '../context/ThemeContext';
 
 export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
   const { theme, setTheme } = useTheme();
+  const [clearing, setClearing] = useState(false);
+
+  async function handleClearAll() {
+    if (!confirm('Delete ALL timers? This cannot be undone.')) return;
+    setClearing(true);
+    try {
+      const cleared = await onClearAll();
+      if (cleared) onClose();
+    } finally {
+      setClearing(false);
+    }
+  }
+
   return (
     <div className="settings-screen">
       <div className="settings-body">
           <div className="settings-section">
             <h4>Data</h4>
             <p>
-              Guest timers stay in your browser. Sign in to sync timers across
-              devices with your account.
+              Timers are stored in Supabase. You must be signed in to create or
+              change them.
             </p>
             <button
               className="btn-danger"
-              onClick={() => {
-                if (confirm('Delete ALL timers? This cannot be undone.')) {
-                  onClearAll();
-                  onClose();
-                }
-              }}
+              disabled={clearing}
+              onClick={handleClearAll}
             >
-              Clear All Timers
+              {clearing ? 'Deleting...' : 'Clear All Timers'}
             </button>
           </div>
           <div className="settings-section">
@@ -41,6 +51,12 @@ export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
                 onClick={() => setTheme('runescape')}
               >
                 RuneScape
+              </button>
+              <button
+                className={`theme-btn${theme === 'synthwave' ? ' active' : ''}`}
+                onClick={() => setTheme('synthwave')}
+              >
+                Synthwave
               </button>
             </div>
           </div>

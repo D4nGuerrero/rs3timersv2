@@ -3,9 +3,11 @@ import './AuthButton.css';
 
 export default function AuthButton({ user, onLogout }) {
   async function handleLogin() {
+    const redirectTo = new URL(import.meta.env.BASE_URL, window.location.origin).toString();
+
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin + '/rs3timersv2/' },
+      options: { redirectTo },
     });
   }
 
