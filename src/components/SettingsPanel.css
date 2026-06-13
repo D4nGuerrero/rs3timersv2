@@ -28,7 +28,10 @@
   border-bottom: 1px solid var(--border);
 }
 
-.settings-section:last-child { border-bottom: none; padding-bottom: 0; }
+.settings-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
 
 .settings-section h4 {
   font-size: 13px;
@@ -58,7 +61,85 @@
   transition: background 0.15s;
 }
 
-.btn-danger:hover { background: var(--danger-bg); }
+.btn-danger:hover {
+  background: var(--danger-bg);
+}
+
+.settings-clear-modal {
+  width: 440px;
+}
+
+.settings-clear-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--danger);
+  background: var(--danger-bg);
+  border-radius: 12px;
+}
+
+.settings-clear-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--danger);
+}
+
+.settings-clear-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--danger-dark);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.settings-clear-copy strong {
+  color: var(--danger);
+  font-size: 14px;
+}
+
+.settings-clear-confirm {
+  background: var(--danger) !important;
+  border-color: var(--danger) !important;
+  color: #fff !important;
+}
+
+.settings-clear-confirm:hover {
+  background: var(--danger-dark) !important;
+}
+
+[data-theme="runescape"] .settings-clear-confirm {
+  color: white !important;
+}
+
+.settings-fallesi-art {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.settings-fallesi-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
 
 .account-section {
   display: none;
@@ -77,6 +158,10 @@
   .btn-danger {
     width: 100%;
     align-self: stretch;
+  }
+
+  .settings-clear-modal {
+    width: min(95vw, 440px);
   }
 }
 
@@ -154,7 +239,10 @@
   font-weight: 600;
   font-family: var(--font);
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .theme-btn:hover {
@@ -167,4 +255,10 @@
   background: var(--accent);
   border-color: var(--accent);
   color: var(--btn-primary-text);
+}
+
+[data-theme="runescape"]
+  .settings-screen
+  *:not(.auth-login-btn):not(.auth-logout-btn) {
+  font-size: 14px !important;
 }

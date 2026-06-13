@@ -76,6 +76,80 @@
 }
 
 /* ─────────────────────────────────────────────
+   Dark theme
+───────────────────────────────────────────── */
+[data-theme="dark"] {
+  --font: "DM Sans", "Segoe UI", sans-serif;
+
+  /* Layout colours */
+  --bg: #0f1117;
+  --sidebar-bg: #171b24;
+  --main-bg: #10151d;
+  --card-bg: #161c27;
+
+  /* Accent */
+  --accent: #7aa2ff;
+  --accent-dark: #5f88e8;
+  --accent-hover-bg: rgba(122, 162, 255, 0.12);
+  --accent-active-bg: rgba(122, 162, 255, 0.16);
+
+  /* Text */
+  --text-primary: #edf2ff;
+  --text-secondary: #9fb0d1;
+  --text-muted: #7081a3;
+
+  /* Borders & inputs */
+  --border: #273247;
+
+  /* Ring */
+  --ring-track: #25344d;
+  --ring-fill: #7aa2ff;
+
+  /* Buttons */
+  --btn-pause: #1b2432;
+  --btn-pause-hover: #243248;
+  --btn-primary-text: #f8fbff;
+  --btn-radius: 10px;
+  --btn-action-bg: #1b2432;
+  --btn-action-bg-hover: #243248;
+  --btn-action-text: var(--text-primary);
+  --btn-action-text-hover: #c6d7ff;
+  --button-edge-enabled: 0;
+  --card-border-img: none;
+
+  /* Sidebar active state */
+  --sidebar-active: #7aa2ff;
+  --sidebar-active-text: #08111f;
+
+  /* Overlays */
+  --overlay-bg: rgba(2, 6, 12, 0.68);
+
+  /* Shadows */
+  --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.22);
+  --shadow-card-hover: 0 10px 24px rgba(0, 0, 0, 0.3);
+  --shadow-done: 0 0 0 2px #7aa2ff, 0 8px 24px rgba(122, 162, 255, 0.22);
+  --shadow-done-pulse-start:
+    0 0 0 2px #7aa2ff, 0 8px 20px rgba(122, 162, 255, 0.18);
+  --shadow-done-pulse-mid:
+    0 0 0 3px #7aa2ff, 0 10px 28px rgba(122, 162, 255, 0.3);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --shadow-dropdown: 0 10px 28px rgba(0, 0, 0, 0.34);
+  --shadow-add-btn: 0 10px 22px rgba(95, 136, 232, 0.3);
+
+  /* Badges */
+  --badge-paused-bg: #352d17;
+  --badge-paused-text: #ffd76a;
+  --badge-done-bg: #14263e;
+  --badge-done-text: #8ec5ff;
+
+  /* Danger */
+  --danger: #ff7676;
+  --danger-bg: #341b1b;
+  --danger-bg-hover: #442121;
+  --danger-dark: #ff9a9a;
+}
+
+/* ─────────────────────────────────────────────
    RuneScape theme — warm browns & golds
 ───────────────────────────────────────────── */
 
@@ -357,6 +431,12 @@
   border: 1px solid transparent;
 }
 
+@media (max-width: 600px) {
+  [data-theme="synthwave"] .mobile-nav {
+    position: fixed;
+  }
+}
+
 [data-theme="synthwave"] .sidebar,
 [data-theme="synthwave"] .main,
 [data-theme="synthwave"] .mobile-nav {
@@ -523,9 +603,23 @@
   scrollbar-color: #7aaee2 #dfeefd;
 }
 
+[data-theme="dark"] .timers-grid-scroll,
+[data-theme="dark"] .modal-body,
+[data-theme="dark"] .settings-body {
+  scrollbar-width: thin;
+  scrollbar-color: #51678f #131925;
+}
+
 [data-theme="default"] .timers-grid-scroll::-webkit-scrollbar,
 [data-theme="default"] .modal-body::-webkit-scrollbar,
 [data-theme="default"] .settings-body::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="dark"] .timers-grid-scroll::-webkit-scrollbar,
+[data-theme="dark"] .modal-body::-webkit-scrollbar,
+[data-theme="dark"] .settings-body::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
@@ -537,6 +631,13 @@
   border-radius: 999px;
 }
 
+[data-theme="dark"] .timers-grid-scroll::-webkit-scrollbar-track,
+[data-theme="dark"] .modal-body::-webkit-scrollbar-track,
+[data-theme="dark"] .settings-body::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, #171d29, #10151f);
+  border-radius: 999px;
+}
+
 [data-theme="default"] .timers-grid-scroll::-webkit-scrollbar-thumb,
 [data-theme="default"] .modal-body::-webkit-scrollbar-thumb,
 [data-theme="default"] .settings-body::-webkit-scrollbar-thumb {
@@ -545,10 +646,24 @@
   border: 2px solid #e8f2fb;
 }
 
+[data-theme="dark"] .timers-grid-scroll::-webkit-scrollbar-thumb,
+[data-theme="dark"] .modal-body::-webkit-scrollbar-thumb,
+[data-theme="dark"] .settings-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #607aa8, #3b4d6c);
+  border-radius: 999px;
+  border: 2px solid #141a25;
+}
+
 [data-theme="default"] .timers-grid-scroll::-webkit-scrollbar-thumb:hover,
 [data-theme="default"] .modal-body::-webkit-scrollbar-thumb:hover,
 [data-theme="default"] .settings-body::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #9dd0fb, #4a90d9);
+}
+
+[data-theme="dark"] .timers-grid-scroll::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .modal-body::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .settings-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7290c4, #4e6792);
 }
 
 [data-theme="runescape"] .timers-grid-scroll,
