@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { parseStoredImage, serializeStoredImage } from './presetImages';
 
 const DB_TIMEOUT_MS = 8000;
 
@@ -28,6 +29,7 @@ async function withRetry(action, label, attempts = 3) {
 }
 
 function fromDb(row) {
+  const { imageKey, imageUrl } = parseStoredImage(row.image_url ?? '');
   return {
     id: row.id,
     name: row.name,
@@ -36,7 +38,8 @@ function fromDb(row) {
     pausedAt: row.paused_at,
     hidden: row.hidden,
     notes: row.notes ?? '',
-    imageUrl: row.image_url ?? '',
+    imageKey,
+    imageUrl,
     createdAt: row.created_at,
   };
 }
@@ -51,7 +54,7 @@ function toDb(userId, timer) {
     paused_at: timer.pausedAt ?? null,
     hidden: timer.hidden,
     notes: timer.notes ?? '',
-    image_url: timer.imageUrl ?? '',
+    image_url: serializeStoredImage(timer),
     created_at: timer.createdAt,
   };
 }

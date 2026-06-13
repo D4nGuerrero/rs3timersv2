@@ -8,6 +8,7 @@ import { ProgressBar } from './themes/runescape/ProgressBar'
 import { useTheme } from '../context/ThemeContext'
 import { useNow } from '../hooks/useNow'
 import trialsResetIcon from '../assets/themes/runescape/trials_reset.png'
+import { resolveTimerImage } from '../lib/presetImages'
 
 
 function formatDate(ts) {
@@ -86,7 +87,7 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
   const menuRef = useRef(null)
   const notesOverlayRef = useRef(null)
   const { theme } = useTheme();
-  const displayImageUrl = timer.imageUrl?.trim() || '';
+  const displayImageUrl = resolveTimerImage(timer)
 
   
 

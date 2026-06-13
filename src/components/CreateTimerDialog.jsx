@@ -34,6 +34,7 @@ export default function CreateTimerDialog({ onAdd, onClose }) {
   const [minutes, setMinutes] = useState(0)
   const [notes, setNotes] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [imageKey, setImageKey] = useState('')
   const [error, setError] = useState('')
   const [fieldErrors, setFieldErrors] = useState({})
   const [saving, setSaving] = useState(false)
@@ -80,7 +81,7 @@ export default function CreateTimerDialog({ onAdd, onClose }) {
 
     try {
       setSaving(true)
-      const added = await onAdd({ name, days, hours, minutes, notes, imageUrl })
+      const added = await onAdd({ name, days, hours, minutes, notes, imageUrl, imageKey })
       if (!added) {
         setError('Could not save this timer to Supabase.')
         return
@@ -113,7 +114,8 @@ export default function CreateTimerDialog({ onAdd, onClose }) {
     setDays(durationFields.days)
     setHours(durationFields.hours)
     setMinutes(durationFields.minutes)
-    setImageUrl(preset.imageUrl)
+    setImageUrl('')
+    setImageKey(preset.imageKey ?? '')
     setNotes(preset.notes)
     setError('')
     setView('create')
@@ -220,7 +222,10 @@ export default function CreateTimerDialog({ onAdd, onClose }) {
                 className="modal-input"
                 placeholder="Optional image URL"
                 value={imageUrl}
-                onChange={e => setImageUrl(e.target.value)}
+                onChange={e => {
+                  setImageUrl(e.target.value)
+                  setImageKey('')
+                }}
               />
             </div>
 

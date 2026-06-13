@@ -13,6 +13,7 @@ import {
   deleteTimer as deleteTimerFromDb,
   deleteAllTimers,
 } from './lib/timerService';
+import { parseStoredImage } from './lib/presetImages';
 import './App.css';
 import './styles/themes.css';
 
@@ -43,6 +44,7 @@ function withTimeout(promise, label, timeoutMs = AUTH_TIMEOUT_MS) {
 
 function normalizeTimer(timer) {
   const fallbackCreatedAt = timer?.createdAt ?? timer?.startTime ?? Date.now();
+  const parsedStoredImage = parseStoredImage(timer?.imageUrl ?? '');
   return {
     ...timer,
     name: timer?.name ?? '',
@@ -51,7 +53,8 @@ function normalizeTimer(timer) {
     pausedAt: timer?.pausedAt ?? null,
     hidden: Boolean(timer?.hidden),
     notes: timer?.notes ?? '',
-    imageUrl: timer?.imageUrl ?? '',
+    imageKey: timer?.imageKey ?? parsedStoredImage.imageKey ?? '',
+    imageUrl: timer?.imageKey ? '' : parsedStoredImage.imageUrl,
     createdAt: Number.isFinite(Number(timer?.createdAt))
       ? Number(timer.createdAt)
       : fallbackCreatedAt,
@@ -240,7 +243,7 @@ export default function App() {
     };
   }, []);
 
-  async function addTimer({ name, days, hours, minutes, notes, imageUrl }) {
+  async function addTimer({ name, days, hours, minutes, notes, imageUrl, imageKey = '' }) {
     const totalMs = (days * 24 * 60 + hours * 60 + minutes) * 60 * 1000;
     if (!name.trim() || totalMs === 0) return false;
     const now = Date.now();
@@ -252,7 +255,8 @@ export default function App() {
       pausedAt: null,
       hidden: false,
       notes: notes?.trim() ?? '',
-      imageUrl: imageUrl?.trim() ?? '',
+      imageKey,
+      imageUrl: imageKey ? '' : imageUrl?.trim() ?? '',
       createdAt: now,
     };
     console.log('[timer] add', newTimer);

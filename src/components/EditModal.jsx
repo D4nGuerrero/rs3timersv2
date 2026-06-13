@@ -48,6 +48,7 @@ export default function EditModal({ timer, onSave, onClose }) {
   const [minutes, setMinutes] = useState(m0)
   const [startInput, setStartInput] = useState(tsToInput(timer.startTime))
   const [notes, setNotes] = useState(timer.notes ?? '')
+  const [imageKey, setImageKey] = useState(timer.imageKey ?? '')
   const [imageUrl, setImageUrl] = useState(timer.imageUrl ?? '')
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
@@ -72,7 +73,8 @@ export default function EditModal({ timer, onSave, onClose }) {
       totalMs,
       startTime: isNaN(newStart) ? timer.startTime : newStart,
       notes: notes.trim(),
-      imageUrl: imageUrl.trim(),
+      imageKey,
+      imageUrl: imageKey ? '' : imageUrl.trim(),
     }
     console.log('[ui] submit edit', { timerId: timer.id, changes })
     try {
@@ -157,7 +159,10 @@ export default function EditModal({ timer, onSave, onClose }) {
             className="modal-input"
             placeholder="Optional image URL"
             value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            onChange={(e) => {
+              setImageUrl(e.target.value)
+              setImageKey('')
+            }}
           />
 
           <label className="field-label">
