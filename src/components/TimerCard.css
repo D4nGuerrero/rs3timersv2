@@ -415,6 +415,17 @@
   filter: saturate(1.05) brightness(1);
 }
 
+[data-theme="dark"] .time-text {
+  background: rgba(0, 0, 0, 0.88);
+  color: #f3f7ff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.34);
+}
+
+[data-theme="dark"] .ring-background-image {
+  opacity: 1;
+  filter: none;
+}
+
 /* Actions */
 .card-actions {
   display: grid;
