@@ -142,9 +142,9 @@ export const PRESET_TIMER_CATEGORIES = [
     description: 'Time to elder for PoF and Ranch Out of Time staples.',
     presets: [
       preset('Black Dragon (92)', 168 * 60, 'pof-black-dragon', POF_FOOD_NOTES.blackDragon),
-      preset('Zygomite (81)', 80 * 60, 'pof-zygomite', POF_FOOD_NOTES.zygomite),
-      preset('Yak (71)', 80 * 60, 'pof-yak', POF_FOOD_NOTES.yak),
-      preset('Chinchompa (54)', 40 * 60, 'pof-chinchompa', POF_FOOD_NOTES.chinchompa),
+      preset('Zygomite (81)', 84 * 60, 'pof-zygomite', POF_FOOD_NOTES.zygomite),
+      preset('Yak (71)', 67.2 * 60, 'pof-yak', POF_FOOD_NOTES.yak),
+      preset('Chinchompa (54)', 42 * 60, 'pof-chinchompa', POF_FOOD_NOTES.chinchompa),
       preset('Common Green Frog (42)', 12 * 60, 'pof-frog', POF_FOOD_NOTES.frog),
       preset('Green Salamander (102)', 80 * 60, 'pof-salamander', POF_FOOD_NOTES.salamander),
     ],
