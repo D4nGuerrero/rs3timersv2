@@ -1,0 +1,17 @@
+{
+  "name": "Danny's Timers",
+  "short_name": "Timers",
+  "description": "Countdown timers with background notifications",
+  "start_url": "/rs3timersv2/",
+  "scope": "/rs3timersv2/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

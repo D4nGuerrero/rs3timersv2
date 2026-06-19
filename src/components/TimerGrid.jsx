@@ -1,7 +1,16 @@
 import TimerCard from './TimerCard'
 import './TimerGrid.css'
 
-export default function TimerGrid({ timers, activeView, onPause, onReset, onHide, onDelete, onUpdate }) {
+export default function TimerGrid({
+  timers,
+  activeView,
+  onPause,
+  onReset,
+  onHide,
+  onDelete,
+  onUpdate,
+  onToggleNotify,
+}) {
   const isArchive = activeView === 'archive'
 
   if (timers.length === 0) {
@@ -31,6 +40,7 @@ export default function TimerGrid({ timers, activeView, onPause, onReset, onHide
             onHide={() => onHide(timer.id)}
             onDelete={() => onDelete(timer.id)}
             onUpdate={(changes) => onUpdate(timer.id, changes)}
+            onToggleNotify={() => onToggleNotify(timer.id)}
           />
         ))}
       </div>

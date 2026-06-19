@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
+import {
+  getNotificationPermission,
+  isNotificationSupported,
+  requestNotificationPermission,
+  showTestNotification,
+} from '../lib/notificationService';
+import { isServiceWorkerSupported } from '../lib/serviceWorkerRegistration';
 import './SettingsPanel.css';
 import './EditModal.css';
 import Rain from './Rain';
@@ -8,11 +15,50 @@ import fallesi from '/public/fallesi.png';
 import fallesiRs from '/public/fallesi_rs.png';
 import { useTheme } from '../context/ThemeContext';
 
-export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
+export default function SettingsPanel({ onClose, onClearAll, user, onLogout, onToast }) {
   const { theme, setTheme } = useTheme();
   const [clearing, setClearing] = useState(false);
   const [confirmClearOpen, setConfirmClearOpen] = useState(false);
+  const [notificationPermission, setNotificationPermission] = useState(() =>
+    getNotificationPermission(),
+  );
+  const [requestingPermission, setRequestingPermission] = useState(false);
   const fallesiImage = theme === 'runescape' ? fallesiRs : fallesi;
+  const notificationsSupported = isNotificationSupported();
+  const serviceWorkerSupported = isServiceWorkerSupported();
+  const notificationStatus =
+    !notificationsSupported
+      ? { tone: 'muted', label: 'Unsupported' }
+      : notificationPermission === 'granted'
+        ? { tone: 'ok', label: 'Enabled' }
+        : notificationPermission === 'denied'
+          ? { tone: 'warn', label: 'Blocked' }
+          : { tone: 'muted', label: 'Not enabled' };
+
+  async function handleEnableNotifications() {
+    setRequestingPermission(true);
+    try {
+      const permission = await requestNotificationPermission();
+      setNotificationPermission(permission);
+      if (permission === 'granted') {
+        onToast?.('Notifications enabled. Turn on the bell on any timer to get alerts.');
+      } else if (permission === 'denied') {
+        onToast?.('Notifications blocked. Enable them in your browser site settings.');
+      } else {
+        onToast?.('Permission not granted. Look for the browser prompt near the address bar.');
+      }
+    } finally {
+      setRequestingPermission(false);
+    }
+  }
+
+  async function handleTestNotification() {
+    if (await showTestNotification()) {
+      onToast?.('Test notification sent. Try switching tabs to confirm background alerts.');
+    } else {
+      onToast?.('Could not send test notification. Check browser permissions.');
+    }
+  }
 
   async function handleClearAll() {
     setClearing(true);
@@ -30,6 +76,68 @@ export default function SettingsPanel({ onClose, onClearAll, user, onLogout }) {
   return (
     <div className="settings-screen">
       <div className="settings-body">
+          <div className="settings-section">
+            <h4>Notifications</h4>
+            <p>
+              Status:{' '}
+              <span className={`settings-inline-status tone-${notificationStatus.tone}`}>
+                {notificationStatus.label}
+              </span>
+            </p>
+
+            {!notificationsSupported ? (
+              <p>Your browser does not support notifications.</p>
+            ) : notificationPermission === 'granted' ? (
+              <>
+                <p>
+                  Notifications are enabled. Turn on the bell on any timer you
+                  want alerts for.
+                </p>
+                <div className="settings-help-list">
+                  <p>• Background tab: should notify normally.</p>
+                  <p>• Browser or app reopened later: missed timers should notify when the page wakes up.</p>
+                  <p>• Fully closed browser at the exact timer end is not guaranteed without web push.</p>
+                  {!serviceWorkerSupported && (
+                    <p>• This browser is missing service worker support, so background alerts may be limited.</p>
+                  )}
+                </div>
+                <button type="button" className="btn-save" onClick={handleTestNotification}>
+                  Send test notification
+                </button>
+              </>
+            ) : notificationPermission === 'denied' ? (
+              <>
+                <p>
+                  Notifications are blocked. Re-enable them in your browser site
+                  settings, then refresh this page.
+                </p>
+                <div className="settings-help-list">
+                  <p>• Chrome/Edge: click the lock or tune icon in the address bar.</p>
+                  <p>• Set Notifications to Allow for this site.</p>
+                  <p>• If alerts still do nothing, also verify Windows notifications are enabled for your browser.</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <p>
+                  First allow browser notifications here. After that, turn on the
+                  bell on any individual timer you care about.
+                </p>
+                <div className="settings-help-list">
+                  <p>• Your browser may show a popup.</p>
+                  <p>• If not, look for the notification icon near the address bar.</p>
+                </div>
+                <button
+                  type="button"
+                  className="btn-save"
+                  disabled={requestingPermission}
+                  onClick={handleEnableNotifications}
+                >
+                  {requestingPermission ? 'Waiting for browser...' : 'Enable Notifications'}
+                </button>
+              </>
+            )}
+          </div>
           <div className="settings-section">
             <h4>Data</h4>
             <p>

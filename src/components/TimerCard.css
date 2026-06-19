@@ -181,6 +181,10 @@
   color: var(--text-secondary);
 }
 
+.notify-btn.active {
+  color: var(--accent);
+}
+
 .notes-icon-btn {
   color: var(--accent);
 }

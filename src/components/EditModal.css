@@ -444,3 +444,53 @@
     width: 100%;
   }
 }
+
+.notification-prompt-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.notification-prompt-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.notification-prompt-step-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-prompt-step p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.notification-prompt-error {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+.notification-prompt-allow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

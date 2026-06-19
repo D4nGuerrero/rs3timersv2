@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { EyeOff, Pencil, Trash2, Play, Pause, RotateCcw, FileText, X } from 'lucide-react'
+import { EyeOff, Pencil, Trash2, Play, Pause, RotateCcw, FileText, X, Bell, BellOff } from 'lucide-react'
 import EditModal from './EditModal'
 import './TimerCard.css'
 import MarkdownNotes from './MarkdownNotes'
@@ -9,6 +9,7 @@ import { useTheme } from '../context/ThemeContext'
 import { useNow } from '../hooks/useNow'
 import trialsResetIcon from '../assets/themes/runescape/trials_reset.png'
 import { resolveTimerImage } from '../lib/presetImages'
+import { formatTimeLeft, getRemainingMs, getTimerProgress } from '../lib/timerUtils'
 
 
 function formatDate(ts) {
@@ -35,26 +36,6 @@ function getPendingLabel(action) {
   }
 }
 
-function formatTimeLeft(ms) {
-  if (ms <= 0) return { text: '0m 0s', done: true }
-  const totalSec = Math.floor(ms / 1000)
-  const days = Math.floor(totalSec / 86400)
-  const hrs = Math.floor((totalSec % 86400) / 3600)
-  const mins = Math.floor((totalSec % 3600) / 60)
-  const secs = totalSec % 60
-
-  if (days > 0) return { text: `${days}d ${hrs}h ${mins}m`, done: false }
-  if (hrs > 0) return { text: `${hrs}h ${mins}m ${secs}s`, done: false }
-  return { text: `${mins}m ${secs}s`, done: false }
-}
-
-function getRemainingMs(timer, now = Date.now()) {
-  const elapsed = timer.pausedAt !== null
-    ? timer.pausedAt - timer.startTime
-    : now - timer.startTime
-  return timer.totalMs - elapsed
-}
-
 // SVG ring
 function RingProgress({ progress }) {
   const r = 54
@@ -78,7 +59,16 @@ function RingProgress({ progress }) {
   )
 }
 
-export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, onDelete, onUpdate }) {
+export default function TimerCard({
+  timer,
+  isArchive,
+  onPause,
+  onReset,
+  onHide,
+  onDelete,
+  onUpdate,
+  onToggleNotify,
+}) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
   const [confirmAction, setConfirmAction] = useState(null) // 'delete' | 'reset' | null
@@ -105,7 +95,7 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
 
   const remaining = getRemainingMs(timer, now)
   const { text: timeText, done } = formatTimeLeft(remaining)
-  const progress = Math.max(0, remaining / timer.totalMs)
+  const progress = getTimerProgress(remaining, timer.totalMs)
   const endTime = timer.startTime + timer.totalMs
 
   const Icons = useThemeIcons();
@@ -130,6 +120,16 @@ export default function TimerCard({ timer, isArchive, onPause, onReset, onHide, 
             {done && <span className="done-badge">Done</span>}
           </div>
           <div className="card-header-actions">
+            <button
+              type="button"
+              className={`menu-btn notify-btn${timer.notify ? ' active' : ''}`}
+              aria-label={timer.notify ? 'Turn off notifications' : 'Turn on notifications'}
+              title={timer.notify ? 'Notifications on' : 'Notifications off'}
+              disabled={Boolean(pendingAction)}
+              onClick={() => runAction('notify', onToggleNotify)}
+            >
+              {timer.notify ? <Bell size={14} /> : <BellOff size={14} />}
+            </button>
             {timer.notes?.trim() && (
               <button
                 type="button"
