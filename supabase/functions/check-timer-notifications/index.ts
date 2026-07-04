@@ -47,7 +47,7 @@ Deno.serve(async () => {
     const payload = JSON.stringify({
       title: job.timer_name,
       body: 'Your timer is ready!',
-      tag: `timer-${job.timer_id}`,
+      tag: job.completion_key,
       completionKey: job.completion_key,
     });
 
