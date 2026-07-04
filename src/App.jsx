@@ -43,6 +43,16 @@ const UUID_PATTERN =
 const AUTH_TIMEOUT_MS = 6000;
 const LOCAL_TIMERS_KEY = 'danny-timers-local';
 
+function isSameLocalDay(leftTs, rightTs) {
+  const left = new Date(leftTs);
+  const right = new Date(rightTs);
+  return (
+    left.getFullYear() === right.getFullYear() &&
+    left.getMonth() === right.getMonth() &&
+    left.getDate() === right.getDate()
+  );
+}
+
 function withTimeout(promise, label, timeoutMs = AUTH_TIMEOUT_MS) {
   let timeoutId;
   const timeout = new Promise((_, reject) => {
@@ -419,9 +429,33 @@ export default function App() {
     return true;
   }
 
-  const visibleTimers = timers.filter((t) =>
-    activeView === 'timers' ? !t.hidden : t.hidden,
-  );
+  const now = Date.now();
+  const visibleTimers = timers
+    .filter((t) => (activeView === 'timers' ? !t.hidden : t.hidden))
+    .sort((left, right) => {
+      const leftRemaining = getRemainingMs(left, now);
+      const rightRemaining = getRemainingMs(right, now);
+
+      const leftDone = left.pausedAt === null && leftRemaining <= 0;
+      const rightDone = right.pausedAt === null && rightRemaining <= 0;
+      if (leftDone !== rightDone) return leftDone ? 1 : -1;
+
+      const leftEndTime = left.startTime + left.totalMs;
+      const rightEndTime = right.startTime + right.totalMs;
+      if (leftEndTime !== rightEndTime) return leftEndTime - rightEndTime;
+
+      return left.createdAt - right.createdAt;
+    });
+
+  const readyTodayTimers =
+    activeView === 'timers'
+      ? visibleTimers.filter((timer) => {
+          if (timer.pausedAt !== null) return false;
+          const remaining = getRemainingMs(timer, now);
+          if (remaining <= 0) return false;
+          return isSameLocalDay(timer.startTime + timer.totalMs, now);
+        })
+      : [];
 
   return (
     <div className="app">
@@ -444,6 +478,14 @@ export default function App() {
           <>
             {activeView === 'timers' && (
               <CreateTimerBar onAdd={addTimer} className="inline-create-bar" />
+            )}
+            {activeView === 'timers' && readyTodayTimers.length > 0 && (
+              <div className="ready-today-banner" role="status">
+                <strong>Ready today:</strong>{' '}
+                {readyTodayTimers.length === 1
+                  ? `${readyTodayTimers[0].name} will be ready later today.`
+                  : `${readyTodayTimers.length} timers will be ready later today.`}
+              </div>
             )}
             <div className="timers-grid-scroll">
               <TimerGrid

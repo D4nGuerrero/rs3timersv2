@@ -27,6 +27,20 @@
   min-height: 0;
 }
 
+.ready-today-banner {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--accent-hover-bg);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.ready-today-banner strong {
+  color: var(--accent);
+}
+
 @media (max-width: 900px) {
   .app {
     height: auto;
@@ -57,6 +71,10 @@
   .main {
     padding: 16px 12px 14px;
     gap: 18px;
+  }
+
+  .ready-today-banner {
+    font-size: 13px;
   }
 }
 
