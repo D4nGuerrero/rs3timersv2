@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { EyeOff, Pencil, Trash2, Play, Pause, RotateCcw, FileText, X, Bell, BellOff } from 'lucide-react'
+import { EyeOff, Pencil, Trash2, Play, Pause, RotateCcw, FileText, X } from 'lucide-react'
 import EditModal from './EditModal'
 import './TimerCard.css'
 import MarkdownNotes from './MarkdownNotes'
@@ -67,7 +67,6 @@ export default function TimerCard({
   onHide,
   onDelete,
   onUpdate,
-  onToggleNotify,
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
@@ -120,16 +119,6 @@ export default function TimerCard({
             {done && <span className="done-badge">Done</span>}
           </div>
           <div className="card-header-actions">
-            <button
-              type="button"
-              className={`menu-btn notify-btn${timer.notify ? ' active' : ''}`}
-              aria-label={timer.notify ? 'Turn off notifications' : 'Turn on notifications'}
-              title={timer.notify ? 'Notifications on' : 'Notifications off'}
-              disabled={Boolean(pendingAction)}
-              onClick={() => runAction('notify', onToggleNotify)}
-            >
-              {timer.notify ? <Bell size={14} /> : <BellOff size={14} />}
-            </button>
             {timer.notes?.trim() && (
               <button
                 type="button"

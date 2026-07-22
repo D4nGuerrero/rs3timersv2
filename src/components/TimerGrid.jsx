@@ -9,7 +9,6 @@ export default function TimerGrid({
   onHide,
   onDelete,
   onUpdate,
-  onToggleNotify,
 }) {
   const isArchive = activeView === 'archive'
 
@@ -40,7 +39,6 @@ export default function TimerGrid({
             onHide={() => onHide(timer.id)}
             onDelete={() => onDelete(timer.id)}
             onUpdate={(changes) => onUpdate(timer.id, changes)}
-            onToggleNotify={() => onToggleNotify(timer.id)}
           />
         ))}
       </div>

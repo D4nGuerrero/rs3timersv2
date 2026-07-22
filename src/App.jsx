@@ -5,7 +5,6 @@ import TimerGrid from './components/TimerGrid';
 import CreateTimerBar from './components/CreateTimerBar';
 import MobileCreateTimerSheet from './components/MobileCreateTimerSheet';
 import SettingsPanel from './components/SettingsPanel';
-import NotificationPrompt from './components/NotificationPrompt';
 import Toast from './components/Toast';
 import { supabase } from './lib/supabase';
 import {
@@ -15,17 +14,7 @@ import {
   deleteAllTimers,
 } from './lib/timerService';
 import { parseStoredImage } from './lib/presetImages';
-import { isNotificationGranted } from './lib/notificationService';
 import { getRemainingMs } from './lib/timerUtils';
-import {
-  applyNotifyPrefs,
-  pruneNotifyPrefs,
-  saveNotifyPref,
-} from './lib/notifyPrefs';
-import { useTimerNotifications } from './hooks/useTimerNotifications';
-import { registerServiceWorker } from './lib/serviceWorkerRegistration';
-import { ensurePushSubscription } from './lib/pushService';
-import { buildAlertFromTimer, fireAlertIfDue } from './lib/scheduledAlerts';
 import './App.css';
 import './styles/themes.css';
 
@@ -109,12 +98,11 @@ function saveLocalTimers(timers) {
 }
 
 export default function App() {
-  const [timers, setTimers] = useState(() => applyNotifyPrefs(loadLocalTimers()));
+  const [timers, setTimers] = useState(() => loadLocalTimers());
   const [activeView, setActiveView] = useState('timers');
   const [createTimerOpen, setCreateTimerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [toast, setToast] = useState({ message: '', visible: false });
-  const [notificationPrompt, setNotificationPrompt] = useState(null);
   const toastTimer = useRef(null);
 
   function showToast(message) {
@@ -125,12 +113,6 @@ export default function App() {
     }, 3000);
   }
 
-  useTimerNotifications(timers, showToast, user?.id);
-
-  useEffect(() => {
-    void registerServiceWorker();
-  }, []);
-
   function openMobileCreateTimer() {
     setActiveView('timers');
     setCreateTimerOpen(true);
@@ -138,7 +120,6 @@ export default function App() {
 
   useEffect(() => {
     saveLocalTimers(timers);
-    pruneNotifyPrefs(timers.map((timer) => timer.id));
   }, [timers]);
 
   async function getAuthenticatedUserId() {
@@ -196,7 +177,7 @@ export default function App() {
       const { error } = await withTimeout(supabase.auth.signOut(), 'signOut');
       if (error) throw error;
       setUser(null);
-      setTimers(applyNotifyPrefs(loadLocalTimers()));
+      setTimers(loadLocalTimers());
       showToast('Signed out. See you next time! 👋');
     } catch (error) {
       console.error('Sign out error:', error);
@@ -213,14 +194,14 @@ export default function App() {
         const dbTimers = await fetchTimers(session.user.id);
         if (cancelled) return;
         setUser(session.user);
-        setTimers(applyNotifyPrefs(dbTimers.map(normalizeTimer)));
+        setTimers(dbTimers.map(normalizeTimer));
         showToast(
           `Welcome back, ${session.user.user_metadata?.full_name?.split(' ')[0] || 'back'}! 👋`,
         );
       } catch (err) {
         console.error('DB load on sign-in failed:', err);
         if (cancelled) return;
-        setTimers(applyNotifyPrefs(loadLocalTimers()));
+        setTimers(loadLocalTimers());
         showToast('Could not load timers from Supabase.');
       }
     }
@@ -237,15 +218,15 @@ export default function App() {
           setUser(session.user);
           const dbTimers = await fetchTimers(session.user.id);
           if (cancelled) return;
-          setTimers(applyNotifyPrefs(dbTimers.map(normalizeTimer)));
+          setTimers(dbTimers.map(normalizeTimer));
         } else {
           setUser(null);
-          setTimers(applyNotifyPrefs(loadLocalTimers()));
+          setTimers(loadLocalTimers());
         }
       } catch (err) {
         console.error('Auth bootstrap failed:', err);
         if (!cancelled) {
-          setTimers(applyNotifyPrefs(loadLocalTimers()));
+          setTimers(loadLocalTimers());
           showToast('Could not load timers from Supabase.');
         }
       }
@@ -263,7 +244,7 @@ export default function App() {
         }, 0);
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
-        setTimers(applyNotifyPrefs(loadLocalTimers()));
+        setTimers(loadLocalTimers());
       }
     });
 
@@ -370,54 +351,6 @@ export default function App() {
     return true;
   }
 
-  async function enableNotifyForTimer(id) {
-    const t = timers.find((timer) => timer.id === id);
-    if (!t) return;
-
-    const updated = { ...t, notify: true };
-    const isAlreadyDone = t.pausedAt === null && getRemainingMs(updated) <= 0;
-
-    saveNotifyPref(id, true);
-    setTimers((prev) => prev.map((timer) => (timer.id === id ? updated : timer)));
-    await ensurePushSubscription(user?.id);
-
-    if (isAlreadyDone) {
-      const alert = buildAlertFromTimer(updated);
-      if (alert) await fireAlertIfDue(alert, { onToast: showToast });
-    } else {
-      showToast(`Notifications on for "${t.name}" — you'll be alerted even in the background 🔔`);
-    }
-  }
-
-  async function toggleNotify(id) {
-    const t = timers.find((timer) => timer.id === id);
-    if (!t) return false;
-
-    const enabling = !t.notify;
-    if (!enabling) {
-      saveNotifyPref(id, false);
-      setTimers((prev) =>
-        prev.map((timer) => (timer.id === id ? { ...timer, notify: false } : timer)),
-      );
-      showToast(`Notifications off for "${t.name}"`);
-      return true;
-    }
-
-    if (!isNotificationGranted()) {
-      setNotificationPrompt({ timerId: id, timerName: t.name });
-      return false;
-    }
-
-    await enableNotifyForTimer(id);
-    return true;
-  }
-
-  function handleNotificationPromptConfirm() {
-    if (!notificationPrompt) return;
-    void enableNotifyForTimer(notificationPrompt.timerId);
-    setNotificationPrompt(null);
-  }
-
   async function clearAll() {
     if (!timers.length) return true;
     const deleted = await persistTimerChange('clear timers', (userId) =>
@@ -472,7 +405,6 @@ export default function App() {
             onClearAll={clearAll}
             user={user}
             onLogout={handleLogout}
-            onToast={showToast}
           />
         ) : (
           <>
@@ -496,7 +428,6 @@ export default function App() {
                 onHide={hideTimer}
                 onDelete={deleteTimer}
                 onUpdate={updateTimer}
-                onToggleNotify={toggleNotify}
               />
             </div>
           </>
@@ -514,13 +445,6 @@ export default function App() {
         <MobileCreateTimerSheet
           onClose={() => setCreateTimerOpen(false)}
           onAdd={addTimer}
-        />
-      )}
-      {notificationPrompt && (
-        <NotificationPrompt
-          timerName={notificationPrompt.timerName}
-          onConfirm={handleNotificationPromptConfirm}
-          onClose={() => setNotificationPrompt(null)}
         />
       )}
       <Toast message={toast.message} visible={toast.visible} />

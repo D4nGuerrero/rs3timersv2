@@ -1,7 +1,7 @@
 {
   "name": "Danny's Timers",
   "short_name": "Timers",
-  "description": "Countdown timers with background notifications",
+  "description": "RuneScape 3 countdown timers",
   "start_url": "/rs3timersv2/",
   "scope": "/rs3timersv2/",
   "display": "standalone",
