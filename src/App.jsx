@@ -371,7 +371,7 @@ export default function App() {
 
       const leftDone = left.pausedAt === null && leftRemaining <= 0;
       const rightDone = right.pausedAt === null && rightRemaining <= 0;
-      if (leftDone !== rightDone) return leftDone ? 1 : -1;
+      if (leftDone !== rightDone) return leftDone ? -1 : 1;
 
       const leftEndTime = left.startTime + left.totalMs;
       const rightEndTime = right.startTime + right.totalMs;
